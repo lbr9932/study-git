@@ -1,0 +1,14 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import messages from "../../i18n/ko/index.json";
+
+const { title, description } = messages;
+---
+<BaseLayout lang="ko" title="Astro Sample">
+  <div class="toolbar">
+    <a class="link" href="/ko/" aria-current="page">국문</a>
+    <a class="link" href="/en/">EN</a>
+  </div>
+  <h1>{title}</h1>
+  <p>{description}</p>
+</BaseLayout>

@@ -1,0 +1,19 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const links = [
+  { href: "/ko/", label: "국문" },
+  { href: "/en/", label: "EN" },
+];
+---
+<BaseLayout lang="ko" title="Astro Sample">
+  <div class="toolbar">
+    {links.map((link) => (
+      <a class="link" href={link.href}>
+        {link.label}
+      </a>
+    ))}
+  </div>
+  <h1>Astro Sample</h1>
+  <p>언어 버전을 선택해 주세요.</p>
+</BaseLayout>

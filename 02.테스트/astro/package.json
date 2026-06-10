@@ -1,0 +1,14 @@
+{
+  "name": "astro-sample",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "devDependencies": {
+    "astro": "^4.16.18"
+  }
+}
