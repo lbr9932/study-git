@@ -1,0 +1,44 @@
+{
+  "languages": [
+    { "locale": "ko", "label": "국문", "href": "/ko/index.html" },
+    { "locale": "en", "label": "EN", "href": "/en/index.html" }
+  ],
+  "gnb": {
+    "ko": [
+      {
+        "id": "home",
+        "label": "홈",
+        "href": "/ko/index.html"
+      },
+      {
+        "id": "about",
+        "label": "소개",
+        "href": "/ko/about/about-as.html",
+        "children": [
+          {
+            "label": "소개",
+            "href": "/ko/about/about-as.html"
+          }
+        ]
+      }
+    ],
+    "en": [
+      {
+        "id": "home",
+        "label": "Home",
+        "href": "/en/index.html"
+      },
+      {
+        "id": "about",
+        "label": "About",
+        "href": "/en/about/about-as.html",
+        "children": [
+          {
+            "label": "About us",
+            "href": "/en/about/about-as.html"
+          }
+        ]
+      }
+    ]
+  }
+}

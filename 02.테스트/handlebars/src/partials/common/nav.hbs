@@ -1,0 +1,23 @@
+<nav class="toolbar">
+  {{#each nav.languages}}
+    <a class="link" href="{{href}}" {{#if active}}aria-current="page"{{/if}}>{{label}}</a>
+  {{/each}}
+</nav>
+
+{{#if gnb.items}}
+  <nav class="gnb" aria-label="Section navigation">
+    <div class="gnb-list">
+      {{#each gnb.items}}
+        <a class="gnb-link" href="{{href}}" {{#if active}}aria-current="page"{{/if}}>{{label}}</a>
+      {{/each}}
+    </div>
+
+    {{#if gnb.children}}
+      <div class="gnb-sub-list">
+        {{#each gnb.children}}
+          <a class="gnb-sub-link" href="{{href}}" {{#if active}}aria-current="page"{{/if}}>{{label}}</a>
+        {{/each}}
+      </div>
+    {{/if}}
+  </nav>
+{{/if}}
