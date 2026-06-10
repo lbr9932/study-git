@@ -1,0 +1,16 @@
+{
+  "name": "svg-icon-cleanup",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "generate:raw": "python3 scripts/convert_svgs.py",
+    "optimize": "svgo -f svg/output -o svg/output-optimize --config=svgo.config.mjs",
+    "build:svgs": "npm run generate:raw && npm run optimize",
+    "build:font": "node scripts/build_font.cjs",
+    "build:all": "npm run build:svgs && npm run build:font"
+  },
+  "devDependencies": {
+    "fantasticon": "^4.1.0",
+    "svgo": "^3.3.2"
+  }
+}

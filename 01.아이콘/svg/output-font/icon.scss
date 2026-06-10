@@ -1,0 +1,51 @@
+$icon-font: "icon";
+
+@font-face {
+    font-family: $icon-font;
+    src: url("./icon.woff2?32f927ec92949fb0df685fea4d9e33f9") format("woff2"),
+url("./icon.woff?32f927ec92949fb0df685fea4d9e33f9") format("woff");
+}
+
+.icon {
+    font-family: $icon-font !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+$icon-map: (
+    "upload-file-16dp-e3e3e3-fill0-wght400-grad0-opsz20-1": "\f101",
+    "trash-can-gray-24": "\f102",
+    "timelapse-black-24": "\f103",
+    "reset": "\f104",
+    "logout-gray-20": "\f105",
+    "info-gray-15": "\f106",
+    "info-black-15": "\f107",
+    "eye-off-gray-24": "\f108",
+    "eye-gray-24": "\f109",
+    "close-gray-24": "\f10a",
+    "close-gray-15": "\f10b",
+    "close-black-24": "\f10c",
+    "close-black-15": "\f10d",
+    "calendar-black-24": "\f10e",
+    "arrow-white-24": "\f10f",
+    "arrow-white-20": "\f110",
+    "arrow-previous-gray-28": "\f111",
+    "arrow-previous-gray-28-1": "\f112",
+    "arrow-previous-black-28": "\f113",
+    "arrow-previous-black-28-1": "\f114",
+    "arrow-gray-24": "\f115",
+    "arrow-gray-20": "\f116",
+    "arrow-black-24": "\f117",
+    "arrow-black-20": "\f118",
+);
+
+@each $name, $value in ($icon-map) {
+    .icon-#{$name}:before {
+        content: $value;
+    }
+}

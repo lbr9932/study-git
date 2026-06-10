@@ -1,0 +1,89 @@
+@font-face {
+    font-family: "icon";
+    src: url("./icon.woff2?32f927ec92949fb0df685fea4d9e33f9") format("woff2"),
+url("./icon.woff?32f927ec92949fb0df685fea4d9e33f9") format("woff");
+}
+
+.icon {
+    font-family: "icon" !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-upload-file-16dp-e3e3e3-fill0-wght400-grad0-opsz20-1:before {
+    content: "\f101";
+}
+.icon-trash-can-gray-24:before {
+    content: "\f102";
+}
+.icon-timelapse-black-24:before {
+    content: "\f103";
+}
+.icon-reset:before {
+    content: "\f104";
+}
+.icon-logout-gray-20:before {
+    content: "\f105";
+}
+.icon-info-gray-15:before {
+    content: "\f106";
+}
+.icon-info-black-15:before {
+    content: "\f107";
+}
+.icon-eye-off-gray-24:before {
+    content: "\f108";
+}
+.icon-eye-gray-24:before {
+    content: "\f109";
+}
+.icon-close-gray-24:before {
+    content: "\f10a";
+}
+.icon-close-gray-15:before {
+    content: "\f10b";
+}
+.icon-close-black-24:before {
+    content: "\f10c";
+}
+.icon-close-black-15:before {
+    content: "\f10d";
+}
+.icon-calendar-black-24:before {
+    content: "\f10e";
+}
+.icon-arrow-white-24:before {
+    content: "\f10f";
+}
+.icon-arrow-white-20:before {
+    content: "\f110";
+}
+.icon-arrow-previous-gray-28:before {
+    content: "\f111";
+}
+.icon-arrow-previous-gray-28-1:before {
+    content: "\f112";
+}
+.icon-arrow-previous-black-28:before {
+    content: "\f113";
+}
+.icon-arrow-previous-black-28-1:before {
+    content: "\f114";
+}
+.icon-arrow-gray-24:before {
+    content: "\f115";
+}
+.icon-arrow-gray-20:before {
+    content: "\f116";
+}
+.icon-arrow-black-24:before {
+    content: "\f117";
+}
+.icon-arrow-black-20:before {
+    content: "\f118";
+}
