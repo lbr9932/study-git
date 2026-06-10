@@ -7,16 +7,16 @@
 ```text
 01.아이콘/
 ├─ svg/
-│  ├─ input/          원본 SVG
-│  ├─ output/         picosvg로 1차 정리한 결과물
-│  ├─ output-optimize/ svgo로 다시 정리한 결과물
-│  └─ output-font/     아이콘 폰트 산출물
+│  ├─ input/          #원본 SVG
+│  ├─ output/         #picosvg로 1차 정리한 결과물
+│  ├─ output-optimize/ #svgo로 다시 정리한 결과물
+│  └─ output-font/    #아이콘 폰트 산출물
 ├─ scripts/
-│  ├─ convert_svgs.py  Python 정리 스크립트
-│  └─ build_font.cjs   폰트 생성용 Node 스크립트
-├─ fantasticon.config.cjs  폰트 생성 설정
-├─ package.json            npm 실행 명령 모음
-└─ README.md               사용 방법 문서
+│  ├─ convert_svgs.py  #Python 정리 스크립트
+│  └─ build_font.cjs   #폰트 생성용 Node 스크립트
+├─ fantasticon.config.cjs  #폰트 생성 설정
+├─ package.json            #npm 실행 명령 모음
+└─ README.md               #사용 방법 문서
 ```
 
 ## 준비
