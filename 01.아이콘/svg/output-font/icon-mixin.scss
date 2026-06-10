@@ -51,5 +51,6 @@ $icon-map: (
         } @else {
             @warn "Unknown icon `#{$icon}`";
         }
+        @content;
     }
 }

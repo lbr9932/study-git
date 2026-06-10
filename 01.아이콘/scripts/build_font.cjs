@@ -92,6 +92,7 @@ if (fs.existsSync(fontJsonPath)) {
     '        } @else {',
     '            @warn "Unknown icon `#{$icon}`";',
     '        }',
+    '        @content;',
     '    }',
     '}',
     '',

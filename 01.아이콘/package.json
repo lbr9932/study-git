@@ -3,6 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "scripts": {
+    "python:convert": "python3 scripts/convert_svgs.py",
     "generate:raw": "python3 scripts/convert_svgs.py",
     "optimize": "svgo -f svg/output -o svg/output-optimize --config=svgo.config.mjs",
     "build:svgs": "npm run generate:raw && npm run optimize",
