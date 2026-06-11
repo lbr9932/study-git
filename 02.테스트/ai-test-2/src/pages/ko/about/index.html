@@ -1,0 +1,17 @@
+{{#> layouts/base
+  title=title
+  description=description
+  canonical=canonical
+  ogType=ogType
+  bodyClass="about-page"
+}}
+  {{#jsonBlock "hero"}}
+  {
+    "eyebrow": "소개",
+    "title": "이 블로그에 대해",
+    "lead": "읽기 쉬운 글, 유지보수 가능한 구조, 긴 수명을 목표로 합니다."
+  }
+  {{/jsonBlock}}
+
+  {{> common/page-hero ../hero}}
+{{/layouts/base}}

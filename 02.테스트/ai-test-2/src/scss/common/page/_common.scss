@@ -1,0 +1,34 @@
+// ---------------------------------------
+// Page / Common
+// ---------------------------------------
+@use "../util" as *;
+
+.page-hero {
+  display: grid;
+  gap: var(--space-3);
+  max-width: var(--content);
+
+  .eyebrow,
+  .lead {
+    margin: 0;
+  }
+}
+
+.pill {
+  @include card-surface;
+  display: flex;
+  align-items: center;
+  min-height: srem(72);
+  padding: var(--space-5) var(--space-6);
+  font-weight: 700;
+  transition:
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+
+  &:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+    transform: translateY(srem(-2));
+  }
+}

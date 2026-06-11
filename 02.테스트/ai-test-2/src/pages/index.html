@@ -1,37 +1,22 @@
 {{#> layouts/base
-  title=title
-  description=description
-  canonical=canonical
-  ogType=ogType
-  bodyClass="home"
+  title="Dev Notes"
+  description="Choose your reading language."
+  canonical="/"
+  ogType="website"
+  landing=true
+  bodyClass="landing"
 }}
-  <section class="hero">
-    <div class="hero__content">
-      <p class="eyebrow">Developer Blog</p>
-      <h1>Readable posts, strong SEO, and low-maintenance publishing.</h1>
+  <section class="hero landing-hero">
+    <div class="hero__content landing-hero__content">
+      <p class="eyebrow">Dev Notes</p>
+      <h1>Choose your reading language</h1>
       <p class="lead">
-        A content-first blog scaffold built for clarity, discoverability, and fast iteration.
+        This entry page routes you into the Korean or English version of the blog.
       </p>
-      <div class="hero__actions">
-        <a class="button button--primary" href="{{siteHref currentPath '/blog/'}}">Browse posts</a>
-        <a class="button button--secondary" href="{{siteHref currentPath '/about/'}}">About the site</a>
+      <div class="hero__actions landing-hero__actions">
+        <a class="button button--primary" href="{{siteHref currentPath '/ko/'}}">한국어로 시작</a>
+        <a class="button button--secondary" href="{{siteHref currentPath '/en/'}}">Start in English</a>
       </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="section__head">
-      <h2>Featured posts</h2>
-      <a href="{{siteHref currentPath '/blog/'}}">View all</a>
-    </div>
-    <div class="card-grid">
-      {{> blog/card
-        href="{{siteHref currentPath '/blog/sample-post/'}}"
-        category="Design"
-        title="Designing a blog for search and readability"
-        excerpt="A practical article structure that supports semantics, metadata, and good reading flow."
-        tags=(array "SEO" "UX" "HTML")
-      }}
     </div>
   </section>
 {{/layouts/base}}

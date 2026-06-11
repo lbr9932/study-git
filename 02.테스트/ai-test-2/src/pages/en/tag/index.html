@@ -1,0 +1,23 @@
+{{#> layouts/base
+  title=title
+  description=description
+  canonical=canonical
+  ogType=ogType
+  bodyClass="tag-index"
+}}
+  {{#jsonBlock "hero"}}
+  {
+    "eyebrow": "Tags",
+    "title": "Browse by tag",
+    "lead": "Tags help readers jump between related topics quickly."
+  }
+  {{/jsonBlock}}
+
+  {{> common/page-hero ../hero}}
+
+  <section class="section">
+    <div class="pill-grid">
+      <a class="pill" href="{{siteHref currentPath '/en/tag/css/'}}">CSS</a>
+    </div>
+  </section>
+{{/layouts/base}}

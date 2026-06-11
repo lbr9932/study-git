@@ -1,0 +1,17 @@
+{{#> layouts/base
+  title=title
+  description=description
+  canonical=canonical
+  ogType=ogType
+  bodyClass="category-page"
+}}
+  {{#jsonBlock "hero"}}
+  {
+    "eyebrow": "카테고리",
+    "title": "개발",
+    "lead": "프론트엔드 아키텍처, JavaScript, 유지보수 가능한 구현에 대한 글입니다."
+  }
+  {{/jsonBlock}}
+
+  {{> common/page-hero ../hero}}
+{{/layouts/base}}

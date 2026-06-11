@@ -1,0 +1,15 @@
+<section class="section">
+  <div class="section__head">
+    <h2>{{title}}</h2>
+    <a href="{{siteHref @root.currentPath moreHref}}">{{moreLabel}}</a>
+  </div>
+  <div class="card-grid">
+    {{> blog/card
+      href=(siteHref @root.currentPath post.href)
+      category=post.category
+      title=post.title
+      excerpt=post.excerpt
+      tags=post.tags
+    }}
+  </div>
+</section>

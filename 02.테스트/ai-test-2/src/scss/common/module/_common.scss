@@ -1,0 +1,37 @@
+@use "../util" as *;
+
+// ---------------------------------------
+// Common
+// ---------------------------------------
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-weight: 700;
+}
+
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  justify-content: center;
+}
+
+.site-nav__link,
+.site-footer__link {
+  color: var(--color-text-muted);
+
+  &:hover {
+    color: var(--color-text);
+  }
+}
+
+.site-nav__link[aria-current="page"] {
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+.site-footer__copy {
+  margin: 0;
+}

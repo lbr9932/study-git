@@ -1,0 +1,16 @@
+@use "../util" as *;
+
+// ---------------------------------------
+// Icon
+// ---------------------------------------
+
+.brand__mark {
+  display: inline-grid;
+  place-items: center;
+  width: srem(36);
+  height: srem(36);
+  border-radius: 0.75rem;
+  background: var(--color-accent);
+  color: #fff;
+  font-size: 0.85rem;
+}

@@ -1,0 +1,17 @@
+// ---------------------------------------
+// Category
+// ---------------------------------------
+@use "../../util" as *;
+
+.category-index,
+.category-page {
+  .page-hero {
+    border-bottom: 1px solid var(--color-border);
+  }
+}
+
+.category-index {
+  .pill-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, srem(192)), 1fr));
+  }
+}

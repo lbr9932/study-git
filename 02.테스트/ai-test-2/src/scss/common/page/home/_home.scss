@@ -1,0 +1,17 @@
+// ---------------------------------------
+// Home
+// ---------------------------------------
+@use "../../util" as *;
+
+.home {
+  .section {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .section__head {
+    a {
+      color: var(--color-accent);
+      font-weight: 700;
+    }
+  }
+}

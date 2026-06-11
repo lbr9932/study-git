@@ -1,0 +1,17 @@
+{{#> layouts/base
+  title=title
+  description=description
+  canonical=canonical
+  ogType=ogType
+  bodyClass="about-page"
+}}
+  {{#jsonBlock "hero"}}
+  {
+    "eyebrow": "About",
+    "title": "About this blog",
+    "lead": "Built for readable posts, maintainable structure, and long-term growth."
+  }
+  {{/jsonBlock}}
+
+  {{> common/page-hero ../hero}}
+{{/layouts/base}}

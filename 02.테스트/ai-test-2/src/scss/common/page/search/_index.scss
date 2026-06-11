@@ -1,0 +1,23 @@
+// ---------------------------------------
+// Search
+// ---------------------------------------
+@use "../../util" as *;
+
+.search-page {
+  .search-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    max-width: var(--content);
+
+    &__input {
+      flex: 1 1 srem(320);
+      min-width: 0;
+      border: 1px solid var(--color-border);
+      border-radius: 999px;
+      padding: 0.85rem 1rem;
+      background: var(--color-surface);
+      color: var(--color-text);
+    }
+  }
+}

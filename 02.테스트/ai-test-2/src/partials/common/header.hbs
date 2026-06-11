@@ -1,16 +1,36 @@
 <header class="site-header">
   <div class="site-header__inner">
-    <a class="brand" href="{{siteHref currentPath '/'}}" aria-label="{{site.title}} home">
+    <a class="brand site-header__brand" href="{{siteHref currentPath (localeHomePath currentPath)}}" aria-label="{{site.title}} home">
       <span class="brand__mark">DN</span>
       <span class="brand__text">{{site.title}}</span>
     </a>
-    <nav class="site-nav" aria-label="Primary">
-      {{#each navigation.header}}
-        <a class="site-nav__link" href="{{siteHref ../currentPath href}}">{{label}}</a>
-      {{/each}}
-    </nav>
-    <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false">
-      <span class="theme-toggle__label">Theme</span>
-    </button>
+    <div class="site-header__menu">
+      <nav class="site-nav site-header__nav" aria-label="Primary">
+        {{#each navigation.header}}
+          <a
+            class="site-nav__link"
+            href="{{siteHref ../currentPath href}}"
+            {{#if (eq ../currentPath href)}}aria-current="page"{{/if}}
+          >{{label}}</a>
+        {{/each}}
+      </nav>
+      <div class="site-header__actions">
+        <div class="locale-switch" aria-label="Language switch">
+          <a
+            class="locale-switch__link{{#if (eq locale "ko")}} is-active{{/if}}"
+            href="{{siteHref currentPath '/ko/'}}"
+            {{#if (eq locale "ko")}}aria-current="page"{{/if}}
+          >KR</a>
+          <a
+            class="locale-switch__link{{#if (eq locale "en")}} is-active{{/if}}"
+            href="{{siteHref currentPath '/en/'}}"
+            {{#if (eq locale "en")}}aria-current="page"{{/if}}
+          >EN</a>
+        </div>
+        <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false">
+          <span class="theme-toggle__label">Theme</span>
+        </button>
+      </div>
+    </div>
   </div>
 </header>

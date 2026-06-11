@@ -1,0 +1,21 @@
+// ---------------------------------------
+// Language Landing
+// ---------------------------------------
+@use "../../util" as *;
+
+.landing {
+  .landing-hero {
+    width: 100%;
+    max-width: var(--content);
+    text-align: center;
+  }
+
+  .landing-hero__content {
+    align-items: center;
+    margin-inline: auto;
+  }
+
+  .landing-hero__actions {
+    justify-content: center;
+  }
+}

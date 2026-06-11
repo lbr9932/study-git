@@ -1,8 +1,9 @@
 import { defineConfig } from "vite";
 import handlebars from "vite-plugin-handlebars";
-import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
-import { dirname, extname, posix, relative, resolve, sep } from "node:path";
+import { dirname, extname, relative, resolve, sep } from "node:path";
+import * as task from "./task/handlebars-helpers.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const srcDir = resolve(__dirname, "src");
@@ -28,60 +29,11 @@ function collectHtmlEntries(dir, rootDir = dir, entries = {}) {
   return entries;
 }
 
-function readJson(path) {
-  return JSON.parse(readFileSync(path, "utf8"));
-}
-
-function normalizePageKey(pagePath) {
-  return pagePath
-    .replace(/^\//, "")
-    .replace(/\/index\.html$/, "/index")
-    .replace(/\.html$/, "") || "index";
-}
-
-function normalizeCurrentPath(pagePath) {
-  const key = normalizePageKey(pagePath);
-  if (key === "index") {
-    return "/";
-  }
-
-  return `/${key.replace(/\/index$/, "")}/`;
-}
-
-function siteHref(currentPath, targetPath) {
-  if (!targetPath.startsWith("/")) {
-    return targetPath;
-  }
-
-  const currentDir = currentPath.endsWith("/") ? currentPath : `${currentPath}/`;
-  const target = targetPath === "/"
-    ? "/index.html"
-    : targetPath.endsWith("/")
-      ? `${targetPath}index.html`
-      : targetPath;
-  let result = posix.relative(currentDir, target);
-
-  if (!result) {
-    return "./";
-  }
-
-  if (!result.startsWith(".")) {
-    result = `./${result}`;
-  }
-
-  return result;
-}
-
-function loadPageMeta(pagePath) {
-  const pagesFile = resolve(srcDir, "data", "pages.json");
-  const pages = readJson(pagesFile);
-  const pageKey = normalizePageKey(pagePath);
-  return pages[pageKey] ?? pages.index;
-}
-
 export default defineConfig({
   root: pagesDir,
+  publicDir: resolve(__dirname, "public"),
   server: {
+    host: "127.0.0.1",
     open: true,
   },
   resolve: {
@@ -89,23 +41,40 @@ export default defineConfig({
       "@": srcDir,
     },
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: "modern-compiler",
+      },
+    },
+  },
   plugins: [
+    {
+      name: "watch-handlebars-data",
+      configureServer(server) {
+        const i18nDir = resolve(srcDir, "i18n");
+        const dataDir = resolve(srcDir, "data");
+        server.watcher.add([i18nDir, dataDir]);
+        server.watcher.on("change", (file) => {
+          if (file.startsWith(i18nDir) || file.startsWith(dataDir)) {
+            server.ws.send({ type: "full-reload" });
+          }
+        });
+      },
+    },
     handlebars({
       partialDirectory: resolve(srcDir, "partials"),
-      helpers: {
-        eq: (left, right) => left === right,
-        includes: (list, value) => Array.isArray(list) && list.includes(value),
-        array: (...values) => values.slice(0, -1),
-        siteHref,
-      },
+      helpers: task.createHandlebarsHelpers(srcDir),
       context(pagePath) {
-        const site = readJson(resolve(srcDir, "data", "site.json"));
-        const navigation = readJson(resolve(srcDir, "data", "navigation.json"));
-        const meta = loadPageMeta(pagePath);
+        const site = task.loadSiteData(srcDir, pagePath);
+        const navigation = task.loadNavigationData(srcDir, pagePath);
+        const meta = task.loadPageMeta(srcDir, pagePath);
         return {
           site,
           navigation,
-          currentPath: normalizeCurrentPath(pagePath),
+          locale: task.getLocaleFromPagePath(pagePath),
+          stylePath: task.resolveStylePath(pagePath),
+          currentPath: task.normalizeCurrentPath(pagePath),
           ...meta,
         };
       },

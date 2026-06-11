@@ -1,0 +1,72 @@
+// ---------------------------------------
+// Hero
+// ---------------------------------------
+@use "../../util" as *;
+
+.home {
+  .hero {
+    @include full-width;
+    position: relative;
+    margin-top: srem(-16);
+    display: block;
+    min-height: calc(100svh - srem(64));
+    z-index: 0;
+
+    &::before {
+      content: "";
+      display: block;
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(circle at top left, color-mix(in srgb, var(--color-accent) 18%, transparent), transparent 40%),
+        linear-gradient(180deg, color-mix(in srgb, var(--color-surface) 95%, transparent), transparent);
+      clip-path: inset(0);
+    }
+
+    &__content {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: var(--space-4);
+      min-height: calc(100svh - srem(64) - var(--space-12));
+      padding-block: var(--space-12);
+      max-width: min(100%, 52rem);
+    }
+
+    &__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      margin-top: var(--space-4);
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 300;
+      line-height: 0.98;
+      letter-spacing: -0.06em;
+      max-width: 14ch;
+    }
+
+    .lead {
+      max-width: 40rem;
+      font-size: clamp(1rem, 1.5vw, 1.125rem);
+    }
+
+    @include mq(x-large) {
+      margin-top: srem(-88);
+      min-height: 100svh;
+
+      &__content {
+        padding-block: var(--space-16);
+        min-height: 100svh;
+      }
+
+      h1 {
+        max-width: 12ch;
+      }
+    }
+  }
+}

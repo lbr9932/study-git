@@ -1,0 +1,29 @@
+{{#> layouts/base
+  title=title
+  description=description
+  canonical=canonical
+  ogType=ogType
+  bodyClass="blog-list"
+}}
+  {{#jsonBlock "hero"}}
+  {
+    "eyebrow": "블로그",
+    "title": "최신 글",
+    "lead": "주제와 최신순 기준으로 전체 아카이브를 탐색하세요."
+  }
+  {{/jsonBlock}}
+
+  {{> common/page-hero ../hero}}
+
+  <section class="section">
+    <div class="card-grid">
+      {{> blog/card
+        href=(siteHref currentPath "/ko/blog/sample-post/")
+        category="디자인"
+        title="검색과 가독성을 함께 고려한 블로그 설계"
+        excerpt="의미 구조, 메타데이터, 읽기 흐름을 함께 고려하는 실제적인 글 구조입니다."
+        tags=(array "SEO" "UX" "HTML")
+      }}
+    </div>
+  </section>
+{{/layouts/base}}

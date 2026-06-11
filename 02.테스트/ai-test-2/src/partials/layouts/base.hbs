@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{site.locale}}" data-theme="light">
+<html lang="{{locale}}" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,14 +12,19 @@
     <meta property="og:url" content="{{site.url}}{{canonical}}" />
     <meta property="og:site_name" content="{{site.title}}" />
     <meta name="twitter:card" content="summary_large_image" />
-    <link rel="stylesheet" href="{{resolve-from-root '../styles/main.css'}}" />
+    {{> style}}
   </head>
   <body class="{{bodyClass}}">
-    {{> common/header}}
-    <main id="content" class="page-shell">
+    {{#unless landing}}
+      {{> common/header}}
+    {{/unless}}
+    <main id="content" class="{{#if landing}}landing-shell{{else}}page-shell{{/if}}">
       {{> @partial-block }}
     </main>
-    {{> common/footer}}
+    {{#unless landing}}
+      {{> common/footer}}
+    {{/unless}}
     <script type="module" src="{{resolve-from-root '../scripts/main.js'}}"></script>
+    {{> script}}
   </body>
   </html>

@@ -1,0 +1,17 @@
+{{#> layouts/base
+  title=title
+  description=description
+  canonical=canonical
+  ogType=ogType
+  bodyClass="tag-page"
+}}
+  {{#jsonBlock "hero"}}
+  {
+    "eyebrow": "태그",
+    "title": "CSS",
+    "lead": "CSS, 스타일 시스템, 레이아웃 패턴 관련 글입니다."
+  }
+  {{/jsonBlock}}
+
+  {{> common/page-hero ../hero}}
+{{/layouts/base}}

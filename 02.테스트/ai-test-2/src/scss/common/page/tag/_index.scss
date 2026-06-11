@@ -1,0 +1,18 @@
+// ---------------------------------------
+// Tag
+// ---------------------------------------
+@use "../../util" as *;
+
+.tag-index,
+.tag-page {
+  .page-hero {
+    border-bottom: 1px solid var(--color-border);
+  }
+}
+
+.tag-index {
+  .pill {
+    justify-content: center;
+    border-radius: 999px;
+  }
+}

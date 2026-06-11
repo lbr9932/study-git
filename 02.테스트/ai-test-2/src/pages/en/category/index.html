@@ -1,0 +1,25 @@
+{{#> layouts/base
+  title=title
+  description=description
+  canonical=canonical
+  ogType=ogType
+  bodyClass="category-index"
+}}
+  {{#jsonBlock "hero"}}
+  {
+    "eyebrow": "Categories",
+    "title": "Browse by category",
+    "lead": "Use categories to explore the archive in a structured way."
+  }
+  {{/jsonBlock}}
+
+  {{> common/page-hero ../hero}}
+
+  <section class="section">
+    <div class="pill-grid">
+      <a class="pill" href="{{siteHref currentPath '/en/category/design/'}}">Design</a>
+      <a class="pill" href="{{siteHref currentPath '/en/category/development/'}}">Development</a>
+      <a class="pill" href="{{siteHref currentPath '/en/category/performance/'}}">Performance</a>
+    </div>
+  </section>
+{{/layouts/base}}

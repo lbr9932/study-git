@@ -1,0 +1,28 @@
+{{#> layouts/base
+  title=title
+  description=description
+  canonical=canonical
+  ogType=ogType
+  bodyClass="blog-list"
+}}
+  {{#jsonBlock "hero"}}
+  {
+    "eyebrow": "Blog",
+    "title": "Latest posts",
+    "lead": "Browse the archive by topic and recency."
+  }
+  {{/jsonBlock}}
+
+  {{> common/page-hero ../hero}}
+  <section class="section">
+    <div class="card-grid">
+      {{> blog/card
+        href=(siteHref currentPath "/en/blog/sample-post/")
+        category="Design"
+        title="Designing a blog for search and readability"
+        excerpt="A practical article structure that balances semantics, metadata, and reading flow."
+        tags=(array "SEO" "UX" "HTML")
+      }}
+    </div>
+  </section>
+{{/layouts/base}}

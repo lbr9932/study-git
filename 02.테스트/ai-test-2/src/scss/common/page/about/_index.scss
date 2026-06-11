@@ -1,0 +1,11 @@
+// ---------------------------------------
+// About
+// ---------------------------------------
+@use "../../util" as *;
+
+.about-page {
+  .page-hero {
+    min-height: min(58svh, srem(560));
+    align-content: center;
+  }
+}

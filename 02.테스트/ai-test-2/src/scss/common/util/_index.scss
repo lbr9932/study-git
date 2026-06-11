@@ -1,0 +1,56 @@
+@use "sass:map";
+@use "sass:math";
+
+// ---------------------------------------
+// Utility
+// ---------------------------------------
+
+$breakpoints: (
+  medium: 48rem,
+  large: 64rem,
+  x-large: 80rem,
+  xx-large: 90rem,
+);
+
+@function srem($px) {
+  @return math.div($px, 16) * 1rem;
+}
+
+@mixin mq($breakpoint) {
+  $value: map.get($breakpoints, $breakpoint);
+
+  @if $value {
+    @media (min-width: $value) {
+      @content;
+    }
+  }
+}
+
+@mixin full-width {
+  width: 100%;
+}
+
+@mixin container {
+  width: min(100% - #{srem(32)}, var(--container));
+  margin-inline: auto;
+}
+
+@mixin surface {
+  background: color-mix(in srgb, var(--color-surface) 94%, transparent);
+  backdrop-filter: blur(10px);
+}
+
+@mixin focus-ring {
+  outline: none;
+
+  &:focus-visible {
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 28%, transparent);
+  }
+}
+
+@mixin card-surface {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+}

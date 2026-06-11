@@ -1,0 +1,46 @@
+{{#*inline "style"}}
+  <link rel="stylesheet" href="{{resolve-from-root '../scss/en/home.scss'}}" />
+{{/inline}}
+
+{{#*inline "script"}}
+  <script src="/assets/js/home.js"></script>
+{{/inline}}
+
+{{#> layouts/base
+  title=title
+  description=description
+  canonical=canonical
+  ogType=ogType
+  bodyClass="home"
+}}
+  {{#jsonBlock "hero"}}
+  {
+    "eyebrow": "Developer Blog",
+    "title": "Readable content with strong search visibility",
+    "lead": "A static blog foundation optimized for readability, SEO, and maintainability.",
+    "actions": [
+      { "label": "Browse posts", "href": "/en/blog/", "variant": "primary" },
+      { "label": "About this site", "href": "/en/about/", "variant": "secondary" }
+    ]
+  }
+  {{/jsonBlock}}
+
+  {{> page/home/hero ../hero}}
+
+  {{#jsonBlock "featured"}}
+  {
+    "title": "Featured posts",
+    "moreLabel": "View all",
+    "moreHref": "/en/blog/",
+    "post": {
+      "category": "Design",
+      "title": "Designing a blog for search and readability",
+      "excerpt": "A practical article structure that balances semantics, metadata, and reading flow.",
+      "tags": ["SEO", "UX", "HTML"],
+      "href": "/en/blog/sample-post/"
+    }
+  }
+  {{/jsonBlock}}
+
+  {{> page/home/featured ../featured}}
+{{/layouts/base}}

@@ -1,0 +1,12 @@
+{
+  "name": "Dev Notes",
+  "title": "Dev Notes",
+  "description": "A developer blog focused on content consumption and search visibility.",
+  "url": "https://example.com",
+  "locale": "en",
+  "social": {
+    "x": "https://x.com/example",
+    "github": "https://github.com/example",
+    "linkedin": "https://www.linkedin.com/in/example/"
+  }
+}

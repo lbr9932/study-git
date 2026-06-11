@@ -1,0 +1,17 @@
+{{#> layouts/base
+  title=title
+  description=description
+  canonical=canonical
+  ogType=ogType
+  bodyClass="category-page"
+}}
+  {{#jsonBlock "hero"}}
+  {
+    "eyebrow": "Category",
+    "title": "Performance",
+    "lead": "Articles about Core Web Vitals, loading strategy, and runtime performance."
+  }
+  {{/jsonBlock}}
+
+  {{> common/page-hero ../hero}}
+{{/layouts/base}}

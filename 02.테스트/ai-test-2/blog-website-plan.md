@@ -243,70 +243,105 @@ flowchart TD
 
 ```txt
 src/
-  content/
-    posts/          # 마크다운 글 파일
-    authors/        # 작성자 정보 (JSON)
-    categories/     # 카테고리 정보 (JSON)
-    tags/           # 태그 정보 (JSON)
-    locales/        # UI 번역 키-값 (ko.json, en.json 등)
-  components/
-    common/         # Header, Footer, Pagination, Breadcrumb
-    blog/           # BlogCard, TagPill, PostMeta, PrevNext
-    seo/            # MetaHead 생성 유틸
-    forms/          # SearchField
-  layouts/          # 페이지 공통 골격 (base, article)
-  pages/
+  content/          # 글 원본과 분류 데이터
+    posts/
+    authors/
+    categories/
+    tags/
+    locales/
+  components/       # 재사용 UI 조각
+    common/
+    blog/
+    seo/
+    forms/
+  layouts/          # 공통 페이지 골격
+  pages/            # 실제 라우트가 되는 템플릿
     index.html
     blog/
     category/
     tag/
     search/
     about/
-  styles/
-    tokens/         # CSS 변수 정의
-    base/           # reset, typography
-    components/     # 컴포넌트별 스타일
-    utilities/      # 헬퍼 클래스
-  scripts/
-    search/         # 제목 검색 로직
-    analytics/      # 분석 연동 (선택)
-  assets/
+  partials/         # 레이아웃과 블록 단위 파츠
+    layouts/
+    common/
+    blog/
+  scss/
+    common/         # 전역 SCSS 레이어
+      base/
+        _index.scss
+      layout/
+        _index.scss
+      module/
+        _index.scss
+        _animation.scss
+        _common.scss
+        _grid.scss
+        _icon.scss
+        _typography.scss
+        _button.scss
+      page/
+        _index.scss
+        home/
+          _index.scss
+          _hero.scss
+          _home.scss
+      util/
+        _index.scss
+      vendor/
+        _index.scss
+    ko/             # 한국어 전용 엔트리
+      ko.scss
+    en/             # 영어 전용 엔트리
+      home.scss
+      en.scss
+  scripts/          # 최소 JS 기능
+    main.js
+    theme.js
+    search.js
+    share.js
+  assets/           # 이미지, 아이콘, 폰트
     images/
     icons/
     fonts/
-  data/             # 네비게이션, 사이트 설정, 정적 인덱스
-  lib/              # 빌드 헬퍼, 메타 생성기
+  data/             # 언어별 사이트 설정과 페이지 메타
+    ko/
+      site.json
+      navigation.json
+      pages/
+        index.json
+        blog.json
+        blog/
+          sample-post.json
+        category.json
+        category/
+          design.json
+        tag.json
+        tag/
+          css.json
+        search.json
+        about.json
+    en/
+      site.json
+      navigation.json
+      pages/
+        index.json
+        blog.json
+        blog/
+          sample-post.json
+        category.json
+        category/
+          design.json
+        tag.json
+        tag/
+          css.json
+        search.json
+        about.json
   types/            # JSDoc 타입 선언
-  generators/       # sitemap, RSS, search-index 생성 스크립트
+  task/             # 헬퍼와 빌드 보조 로직
 ```
 
-### 폴더 역할
-
-- `content/`
-  - 글과 관련된 원천 데이터를 저장한다.
-  - SSG 생성의 기준이 된다.
-- `components/`
-  - 재사용 UI를 모은다.
-  - 공통, 블로그 전용, SEO 전용으로 분리한다.
-- `layouts/`
-  - 페이지 공통 골격을 정의한다.
-  - header/footer/meta 영역을 담당한다.
-- `pages/`
-  - 실제 라우트가 되는 HTML 템플릿을 둔다.
-- `styles/`
-  - 디자인 토큰, base, component, utility 스타일을 분리한다.
-- `scripts/`
-  - 검색, 분석 등 최소 JS 기능을 둔다.
-- `assets/`
-  - 이미지, 아이콘, 폰트 등 정적 자산을 둔다.
-- `data/`
-  - 네비게이션, 사이트 설정, 정적 인덱스 데이터를 둔다.
-- `lib/`
-  - 빌드 헬퍼, 메타 생성기, RSS/Sitemap 생성 로직을 둔다.
-- `types/`
-  - JSDoc 타입 선언을 둔다. TypeScript 전환 시 `.d.ts`로 교체한다.
-- `generators/`
-  - sitemap, RSS, search-index 생성기 스크립트를 둔다.
+예시: `scss/common/module/_typography.scss`는 카드와 본문 타이포 규칙만 모아둔다.
 
 ---
 
@@ -318,21 +353,26 @@ src/
 | ---- | ---------------------------------------------- | ---------------------------------- | --------------------------------------------------------------- |
 | 1    | 프로젝트 기본 설정                             | Vite 설정과 경로 규칙만 필요       | 빌드 가능한 상태                                                |
 | 2    | 콘텐츠 스키마 정의 및 마크다운 파이프라인 구성 | `gray-matter` + `marked` 설치      | `.md` → HTML 변환 가능                                          |
-| 3    | 디자인 토큰 정의                               | 스타일 파일만 필요                 | 컬러/타이포/간격 CSS 변수 확보                                  |
-| 4    | Base Layout 생성                               | 공통 레이아웃만 필요               | 모든 페이지가 동일 골격 사용                                    |
-| 5    | Header 구현                                    | 레이아웃 + 토큰 필요               | 네비게이션 표시, Language Switcher 포함                         |
-| 6    | Footer 구현                                    | 레이아웃 + 토큰 필요               | About / RSS / Sitemap 링크                                      |
-| 7    | Home 구현                                      | 목록 데이터 샘플 필요              | 최근 글 목록 표시                                               |
-| 8    | Blog Card 구현                                 | 카드 데이터 샘플만 있으면 가능     | 목록에 재사용 가능                                              |
-| 9    | Blog List 페이지 구현                          | 카드 컴포넌트 필요                 | 페이지네이션 포함 목록 표시                                     |
-| 10   | Blog Detail 페이지 구현                        | 마크다운 파이프라인 필요           | 제목 / 작성자 / 작성일 / 카테고리 / 본문 / 이전·다음 글 표시    |
-| 11   | Category 페이지 구현                           | 필터 데이터 필요                   | 분류별 목록 표시                                                |
-| 12   | Tag 페이지 구현                                | 필터 데이터 필요                   | 태그별 목록 표시                                                |
-| 13   | Search UI 구현                                 | `search-index.json` (title만) 필요 | 키보드로 제목 검색 가능                                         |
-| 14   | SEO 메타 자동화                                | 콘텐츠 스키마 필요                 | `title`, `description`, `canonical`, OG, Twitter Card 자동 생성 |
-| 15   | Sitemap 생성                                   | 라우트 목록 필요                   | 빌드 시 `sitemap.xml` 산출                                      |
-| 16   | RSS Feed 생성                                  | 글 메타와 본문 요약 필요           | 빌드 시 `rss.xml` 산출                                          |
-| 17   | Lighthouse 최적화                              | 전체 페이지 완성 후                | Performance / Accessibility / SEO 각 90+                        |
+| 3    | SCSS 구조 분해                                 | 스타일 파일만 필요                 | `common/module`, `common/page/home`, `ko`, `en` 구조 확보       |
+| 4    | 디자인 토큰 정의                               | `scss/common/base` 필요            | 컬러/타이포/간격 CSS 변수 확보                                  |
+| 5    | 공통 레이아웃 SCSS 정리                        | `scss/common/layout` 필요          | 헤더 / 푸터 / 페이지 쉘 스타일 정리                             |
+| 6    | 모듈 SCSS 분리                                 | `scss/common/module` 필요          | 공통 모듈 파일 단위로 세분화                                     |
+| 7    | 홈 SCSS 분리                                   | `scss/common/page/home` 필요       | Hero 중심 홈 스타일 확보                                        |
+| 8    | 언어별 엔트리 연결                              | `scss/ko/ko.scss`, `scss/en/en.scss` 필요       | 한국어/영어 스타일 분기 완료                          |
+| 9    | Base Layout 생성                               | 공통 레이아웃만 필요               | 모든 페이지가 동일 골격 사용                                    |
+| 10   | Header 구현                                    | 레이아웃 + 토큰 필요               | 네비게이션 표시, Language Switcher 포함                         |
+| 11   | Footer 구현                                    | 레이아웃 + 토큰 필요               | About / RSS / Sitemap 링크                                      |
+| 12   | Home 구현                                      | 목록 데이터 샘플 필요              | 최근 글 목록 표시                                               |
+| 13   | Blog Card 구현                                 | 카드 데이터 샘플만 있으면 가능     | 목록에 재사용 가능                                              |
+| 14   | Blog List 페이지 구현                          | 카드 컴포넌트 필요                 | 페이지네이션 포함 목록 표시                                     |
+| 15   | Blog Detail 페이지 구현                        | 마크다운 파이프라인 필요           | 제목 / 작성자 / 작성일 / 카테고리 / 본문 / 이전·다음 글 표시    |
+| 16   | Category 페이지 구현                           | 필터 데이터 필요                   | 분류별 목록 표시                                                |
+| 17   | Tag 페이지 구현                                | 필터 데이터 필요                   | 태그별 목록 표시                                                |
+| 18   | Search UI 구현                                 | `search-index.json` (title만) 필요 | 키보드로 제목 검색 가능                                         |
+| 19   | SEO 메타 자동화                                | 콘텐츠 스키마 필요                 | `title`, `description`, `canonical`, OG, Twitter Card 자동 생성 |
+| 20   | Sitemap 생성                                   | 라우트 목록 필요                   | 빌드 시 `sitemap.xml` 산출                                      |
+| 21   | RSS Feed 생성                                  | 글 메타와 본문 요약 필요           | 빌드 시 `rss.xml` 산출                                          |
+| 22   | Lighthouse 최적화                              | 전체 페이지 완성 후                | Performance / Accessibility / SEO 각 90+                        |
 
 ---
 

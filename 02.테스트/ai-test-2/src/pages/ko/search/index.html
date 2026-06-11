@@ -1,0 +1,25 @@
+{{#> layouts/base
+  title=title
+  description=description
+  canonical=canonical
+  ogType=ogType
+  bodyClass="search-page"
+}}
+  {{#jsonBlock "hero"}}
+  {
+    "eyebrow": "검색",
+    "title": "글 검색",
+    "lead": "검색은 처음부터 키보드 친화적으로 동작합니다."
+  }
+  {{/jsonBlock}}
+
+  {{> common/page-hero ../hero}}
+
+  <section class="section">
+    <form class="search-form" role="search">
+      <label class="sr-only" for="search-query-ko">검색어</label>
+      <input id="search-query-ko" class="search-form__input" type="search" placeholder="제목, 태그, 요약으로 검색" />
+      <button class="button button--primary" type="submit">검색</button>
+    </form>
+  </section>
+{{/layouts/base}}

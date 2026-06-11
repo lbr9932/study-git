@@ -1,0 +1,12 @@
+{
+  "name": "Dev Notes",
+  "title": "Dev Notes",
+  "description": "콘텐츠 소비와 검색 유입을 우선하는 개발자 블로그입니다.",
+  "url": "https://example.com",
+  "locale": "ko",
+  "social": {
+    "x": "https://x.com/example",
+    "github": "https://github.com/example",
+    "linkedin": "https://www.linkedin.com/in/example/"
+  }
+}

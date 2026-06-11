@@ -1,0 +1,32 @@
+// ---------------------------------------
+// Post Detail
+// ---------------------------------------
+@use "../../util" as *;
+
+.post-detail {
+  .article {
+    width: min(100%, var(--content));
+    margin-inline: auto;
+  }
+
+  .article__header {
+    display: grid;
+    gap: var(--space-4);
+    padding-bottom: var(--space-8);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .article__content {
+    display: grid;
+    gap: var(--space-5);
+    padding-top: var(--space-8);
+
+    > :first-child {
+      margin-top: 0;
+    }
+
+    > :last-child {
+      margin-bottom: 0;
+    }
+  }
+}

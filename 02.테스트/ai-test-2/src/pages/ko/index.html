@@ -1,0 +1,46 @@
+{{#*inline "style"}}
+  <link rel="stylesheet" href="{{resolve-from-root '../scss/ko/home.scss'}}" />
+{{/inline}}
+
+{{#*inline "script"}}
+  <script src="/assets/js/home.js"></script>
+{{/inline}}
+
+{{#> layouts/base
+  title=title
+  description=description
+  canonical=canonical
+  ogType=ogType
+  bodyClass="home"
+}}
+  {{#jsonBlock "hero"}}
+  {
+    "eyebrow": "개발자 블로그",
+    "title": "읽기 쉽고 검색에 강한 콘텐츠 블로그",
+    "lead": "가독성, SEO, 유지보수성을 우선하는 정적 블로그 기본 구조입니다.",
+    "actions": [
+      { "label": "글 목록 보기", "href": "/ko/blog/", "variant": "primary" },
+      { "label": "소개 보기", "href": "/ko/about/", "variant": "secondary" }
+    ]
+  }
+  {{/jsonBlock}}
+
+  {{> page/home/hero ../hero}}
+
+  {{#jsonBlock "featured"}}
+  {
+    "title": "추천 글",
+    "moreLabel": "전체 보기",
+    "moreHref": "/ko/blog/",
+    "post": {
+      "category": "디자인",
+      "title": "검색과 가독성을 함께 고려한 블로그 설계",
+      "excerpt": "의미 구조, 메타데이터, 읽기 흐름을 함께 고려하는 실제적인 글 구조입니다.",
+      "tags": ["SEO", "UX", "HTML"],
+      "href": "/ko/blog/sample-post/"
+    }
+  }
+  {{/jsonBlock}}
+
+  {{> page/home/featured ../featured}}
+{{/layouts/base}}

@@ -1,0 +1,56 @@
+@use "../util" as *;
+
+// ---------------------------------------
+// Typography
+// ---------------------------------------
+
+.post-card {
+  @include card-surface;
+
+  &__link {
+    display: grid;
+    gap: var(--space-3);
+    padding: var(--space-6);
+  }
+
+  &__eyebrow {
+    margin: 0;
+    color: var(--color-accent);
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 1.25rem;
+  }
+
+  &__excerpt {
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+}
+
+.eyebrow {
+  margin: 0 0 var(--space-3);
+  color: var(--color-accent);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.lead,
+.article__meta {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.hero h1,
+.page-hero h1,
+.article h1 {
+  margin: 0;
+  line-height: 1.1;
+  font-size: clamp(2.25rem, 4vw, 3.5rem);
+  letter-spacing: -0.04em;
+}

@@ -1,0 +1,19 @@
+<section class="hero">
+  <div class="hero__content">
+    <p class="eyebrow">{{eyebrow}}</p>
+    <h1>{{title}}</h1>
+    <p class="lead">{{lead}}</p>
+    {{#if actions}}
+      <div class="hero__actions">
+        {{#each actions}}
+          <a
+            class="button button--{{variant}}"
+            href="{{siteHref @root.currentPath href}}"
+          >
+            {{label}}
+          </a>
+        {{/each}}
+      </div>
+    {{/if}}
+  </div>
+</section>

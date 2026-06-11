@@ -1,0 +1,25 @@
+{{#> layouts/base
+  title=title
+  description=description
+  canonical=canonical
+  ogType=ogType
+  bodyClass="search-page"
+}}
+  {{#jsonBlock "hero"}}
+  {
+    "eyebrow": "Search",
+    "title": "Search posts",
+    "lead": "Search is keyboard-friendly and lightweight from the start."
+  }
+  {{/jsonBlock}}
+
+  {{> common/page-hero ../hero}}
+
+  <section class="section">
+    <form class="search-form" role="search">
+      <label class="sr-only" for="search-query-en">Search query</label>
+      <input id="search-query-en" class="search-form__input" type="search" placeholder="Search by title, tag, or summary" />
+      <button class="button button--primary" type="submit">Search</button>
+    </form>
+  </section>
+{{/layouts/base}}

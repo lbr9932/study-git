@@ -1,0 +1,17 @@
+{{#> layouts/base
+  title=title
+  description=description
+  canonical=canonical
+  ogType=ogType
+  bodyClass="tag-page"
+}}
+  {{#jsonBlock "hero"}}
+  {
+    "eyebrow": "Tag",
+    "title": "CSS",
+    "lead": "Articles about CSS, styling systems, and layout patterns."
+  }
+  {{/jsonBlock}}
+
+  {{> common/page-hero ../hero}}
+{{/layouts/base}}
