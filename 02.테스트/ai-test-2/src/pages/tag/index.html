@@ -1,0 +1,21 @@
+{{#> layouts/base
+  title=title
+  description=description
+  canonical=canonical
+  ogType=ogType
+  bodyClass="tag-index"
+}}
+  <section class="page-hero">
+    <p class="eyebrow">Tags</p>
+    <h1>Browse by tag</h1>
+    <p class="lead">Tags help readers jump across topics without losing context.</p>
+  </section>
+
+  <section class="section">
+    <div class="pill-grid">
+      <a class="pill" href="{{siteHref currentPath '/tag/css/'}}">CSS</a>
+      <a class="pill" href="{{siteHref currentPath '/tag/html/'}}">HTML</a>
+      <a class="pill" href="{{siteHref currentPath '/tag/seo/'}}">SEO</a>
+    </div>
+  </section>
+{{/layouts/base}}

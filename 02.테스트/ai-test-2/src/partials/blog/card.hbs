@@ -1,0 +1,12 @@
+<article class="post-card">
+  <a class="post-card__link" href="{{href}}">
+    <p class="post-card__eyebrow">{{category}}</p>
+    <h3 class="post-card__title">{{title}}</h3>
+    <p class="post-card__excerpt">{{excerpt}}</p>
+    <ul class="tag-list" aria-label="Post tags">
+      {{#each tags}}
+        <li class="tag-list__item">{{this}}</li>
+      {{/each}}
+    </ul>
+  </a>
+</article>

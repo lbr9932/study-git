@@ -1,0 +1,6 @@
+[
+  { "slug": "javascript", "name": "JavaScript" },
+  { "slug": "css", "name": "CSS" },
+  { "slug": "tooling", "name": "Tooling" },
+  { "slug": "general", "name": "일반" }
+]

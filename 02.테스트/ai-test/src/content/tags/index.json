@@ -1,0 +1,9 @@
+[
+  { "slug": "vite", "name": "Vite" },
+  { "slug": "ssg", "name": "SSG" },
+  { "slug": "css-variables", "name": "CSS Variables" },
+  { "slug": "design-tokens", "name": "Design Tokens" },
+  { "slug": "html", "name": "HTML" },
+  { "slug": "seo", "name": "SEO" },
+  { "slug": "performance", "name": "Performance" }
+]

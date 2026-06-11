@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1D4ED8"/>
+      <stop offset="100%" stop-color="#6D28D9"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#g)"/>
+  <circle cx="980" cy="80" r="340" fill="white" fill-opacity="0.04"/>
+  <circle cx="120" cy="560" r="260" fill="white" fill-opacity="0.05"/>
+  <text x="80" y="260" font-family="system-ui, sans-serif" font-size="64" font-weight="700" fill="white">JavaScript ES 모듈</text>
+  <text x="80" y="350" font-family="system-ui, sans-serif" font-size="64" font-weight="700" fill="white">완벽 가이드</text>
+  <text x="80" y="430" font-family="system-ui, sans-serif" font-size="28" fill="white" fill-opacity="0.8">import · export · Dynamic Import</text>
+</svg>

@@ -1,0 +1,12 @@
+{
+  "name": "Dev Notes",
+  "title": "Dev Notes",
+  "description": "A content-first developer blog focused on search visibility, readability, and maintainability.",
+  "url": "https://example.com",
+  "locale": "ko",
+  "social": {
+    "x": "https://x.com/example",
+    "github": "https://github.com/example",
+    "linkedin": "https://www.linkedin.com/in/example/"
+  }
+}

@@ -1,0 +1,97 @@
+:root {
+  /* ── Brand & Accent ── */
+  --color-primary: #0066cc;
+  --color-primary-focus: #0071e3;
+  --color-primary-on-dark: #2997ff;
+  --color-on-primary: #ffffff;
+
+  /* ── Surface ── */
+  --color-canvas: #ffffff;
+  --color-canvas-parchment: #f5f5f7;
+  --color-surface-pearl: #fafafc;
+  --color-surface-tile-1: #272729;
+  --color-surface-tile-2: #2a2a2c;
+  --color-surface-tile-3: #252527;
+  --color-surface-black: #000000;
+  --color-surface-chip: rgba(210, 210, 215, 0.64);
+
+  /* ── Text ── */
+  --color-ink: #1d1d1f;
+  --color-body: #1d1d1f;
+  --color-body-on-dark: #ffffff;
+  --color-body-muted: #cccccc;
+  --color-ink-muted-80: #333333;
+  --color-ink-muted-48: #7a7a7a;
+
+  /* ── Hairlines ── */
+  --color-divider-soft: rgba(0, 0, 0, 0.04);
+  --color-hairline: #e0e0e0;
+  --color-hairline-rgba: rgba(0, 0, 0, 0.08);
+
+  /* ── Typography ── */
+  --font-display: -apple-system, 'SF Pro Display', system-ui, BlinkMacSystemFont, 'Inter', sans-serif;
+  --font-body: -apple-system, 'SF Pro Text', system-ui, BlinkMacSystemFont, 'Inter', sans-serif;
+  --font-mono: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+
+  --text-hero: 56px;
+  --text-display-lg: 40px;
+  --text-display-md: 34px;
+  --text-lead: 28px;
+  --text-lead-airy: 24px;
+  --text-tagline: 21px;
+  --text-body-strong: 17px;
+  --text-body: 17px;
+  --text-caption: 14px;
+  --text-fine-print: 12px;
+  --text-micro: 10px;
+  --text-nav-link: 12px;
+
+  --weight-light: 300;
+  --weight-normal: 400;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  --leading-display: 1.07;
+  --leading-display-md: 1.10;
+  --leading-tagline: 1.19;
+  --leading-body: 1.47;
+  --leading-dense-link: 2.41;
+  --leading-caption: 1.43;
+
+  --tracking-hero: -0.28px;
+  --tracking-display: -0.374px;
+  --tracking-tagline: 0.231px;
+  --tracking-body: -0.374px;
+  --tracking-caption: -0.224px;
+  --tracking-nav: -0.12px;
+
+  /* ── Spacing (8px base) ── */
+  --space-xxs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 17px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-xxl: 48px;
+  --space-section: 80px;
+
+  /* ── Border Radius ── */
+  --radius-none: 0px;
+  --radius-xs: 5px;
+  --radius-sm: 8px;
+  --radius-md: 11px;
+  --radius-lg: 18px;
+  --radius-pill: 9999px;
+  --radius-full: 50%;
+
+  /* ── Elevation ── */
+  --shadow-product: rgba(0, 0, 0, 0.22) 3px 5px 30px 0;
+  --shadow-hairline: 0 0 0 1px rgba(0, 0, 0, 0.08);
+
+  /* ── Layout ── */
+  --max-width: 980px;
+  --max-width-wide: 1440px;
+  --article-width: 680px;
+  --nav-height: 44px;
+  --sub-nav-height: 52px;
+}

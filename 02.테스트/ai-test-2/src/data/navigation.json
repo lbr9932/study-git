@@ -1,0 +1,14 @@
+{
+  "header": [
+    { "label": "Home", "href": "/" },
+    { "label": "Blog", "href": "/blog/" },
+    { "label": "Categories", "href": "/category/" },
+    { "label": "Tags", "href": "/tag/" },
+    { "label": "Search", "href": "/search/" },
+    { "label": "About", "href": "/about/" }
+  ],
+  "footer": [
+    { "label": "RSS", "href": "/rss.xml" },
+    { "label": "Sitemap", "href": "/sitemap.xml" }
+  ]
+}

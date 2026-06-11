@@ -1,0 +1,37 @@
+{{#> layouts/base
+  title=title
+  description=description
+  canonical=canonical
+  ogType=ogType
+  bodyClass="home"
+}}
+  <section class="hero">
+    <div class="hero__content">
+      <p class="eyebrow">Developer Blog</p>
+      <h1>Readable posts, strong SEO, and low-maintenance publishing.</h1>
+      <p class="lead">
+        A content-first blog scaffold built for clarity, discoverability, and fast iteration.
+      </p>
+      <div class="hero__actions">
+        <a class="button button--primary" href="{{siteHref currentPath '/blog/'}}">Browse posts</a>
+        <a class="button button--secondary" href="{{siteHref currentPath '/about/'}}">About the site</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section__head">
+      <h2>Featured posts</h2>
+      <a href="{{siteHref currentPath '/blog/'}}">View all</a>
+    </div>
+    <div class="card-grid">
+      {{> blog/card
+        href="{{siteHref currentPath '/blog/sample-post/'}}"
+        category="Design"
+        title="Designing a blog for search and readability"
+        excerpt="A practical article structure that supports semantics, metadata, and good reading flow."
+        tags=(array "SEO" "UX" "HTML")
+      }}
+    </div>
+  </section>
+{{/layouts/base}}

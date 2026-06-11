@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="{{site.locale}}" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{#if title}}{{title}} | {{site.title}}{{else}}{{site.title}}{{/if}}</title>
+    <meta name="description" content="{{description}}" />
+    <link rel="canonical" href="{{site.url}}{{canonical}}" />
+    <meta property="og:type" content="{{#if ogType}}{{ogType}}{{else}}website{{/if}}" />
+    <meta property="og:title" content="{{#if title}}{{title}}{{else}}{{site.title}}{{/if}}" />
+    <meta property="og:description" content="{{description}}" />
+    <meta property="og:url" content="{{site.url}}{{canonical}}" />
+    <meta property="og:site_name" content="{{site.title}}" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="stylesheet" href="{{resolve-from-root '../styles/main.css'}}" />
+  </head>
+  <body class="{{bodyClass}}">
+    {{> common/header}}
+    <main id="content" class="page-shell">
+      {{> @partial-block }}
+    </main>
+    {{> common/footer}}
+    <script type="module" src="{{resolve-from-root '../scripts/main.js'}}"></script>
+  </body>
+  </html>

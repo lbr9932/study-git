@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#B45309"/>
+      <stop offset="100%" stop-color="#DC2626"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#g)"/>
+  <circle cx="950" cy="120" r="320" fill="white" fill-opacity="0.05"/>
+  <circle cx="150" cy="520" r="220" fill="white" fill-opacity="0.05"/>
+  <text x="80" y="260" font-family="system-ui, sans-serif" font-size="56" font-weight="700" fill="white">CSS 디자인 토큰으로</text>
+  <text x="80" y="340" font-family="system-ui, sans-serif" font-size="56" font-weight="700" fill="white">일관된 UI 만들기</text>
+  <text x="80" y="420" font-family="system-ui, sans-serif" font-size="28" fill="white" fill-opacity="0.8">CSS Custom Properties · Design Tokens</text>
+</svg>

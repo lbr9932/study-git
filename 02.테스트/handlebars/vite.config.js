@@ -5,8 +5,8 @@ import { fileURLToPath } from "node:url";
 import { dirname, extname, relative, resolve, sep } from "node:path";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const rootDir = resolve(__dirname, "src");
-const pagesDir = resolve(__dirname, "src/pages");
+const rootDir = resolve(__dirname, "./src");
+const pagesDir = resolve(__dirname, "./src/pages");
 const navFile = resolve(rootDir, "data", "nav.json");
 
 function collectHtmlEntries(dir, rootDir = dir, entries = {}) {
@@ -96,6 +96,11 @@ export default defineConfig({
   root: pagesDir,
   server: {
     open: true,
+  },
+  resolve: {
+    alias: {
+      "@": rootDir,
+    },
   },
   plugins: [
     {

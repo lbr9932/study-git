@@ -1,0 +1,25 @@
+{{#> layouts/base
+  title=title
+  description=description
+  canonical=canonical
+  ogType=ogType
+  bodyClass="blog-list"
+}}
+  <section class="page-hero">
+    <p class="eyebrow">Blog</p>
+    <h1>Latest articles</h1>
+    <p class="lead">Browse the full archive with clear categories and tag-driven discovery.</p>
+  </section>
+
+  <section class="section">
+    <div class="card-grid">
+      {{> blog/card
+        href="{{siteHref currentPath '/blog/sample-post/'}}"
+        category="Design"
+        title="Designing a blog for search and readability"
+        excerpt="A practical article structure that supports semantics, metadata, and good reading flow."
+        tags=(array "SEO" "UX" "HTML")
+      }}
+    </div>
+  </section>
+{{/layouts/base}}

@@ -1,0 +1,56 @@
+{
+  "index": {
+    "title": "Dev Notes",
+    "description": "Developer blog home with featured articles, recent posts, and category highlights.",
+    "canonical": "/",
+    "ogType": "website"
+  },
+  "blog/index": {
+    "title": "Blog",
+    "description": "Browse all articles in one place with filters for recency and topic.",
+    "canonical": "/blog/",
+    "ogType": "website"
+  },
+  "blog/sample-post": {
+    "title": "Sample Post",
+    "description": "A sample article page that demonstrates semantic structure and SEO-friendly metadata.",
+    "canonical": "/blog/sample-post/",
+    "ogType": "article"
+  },
+  "category/index": {
+    "title": "Categories",
+    "description": "Browse articles by category.",
+    "canonical": "/category/",
+    "ogType": "website"
+  },
+  "category/design": {
+    "title": "Design",
+    "description": "Articles about UI, UX, and visual systems.",
+    "canonical": "/category/design/",
+    "ogType": "website"
+  },
+  "tag/index": {
+    "title": "Tags",
+    "description": "Browse articles by tag.",
+    "canonical": "/tag/",
+    "ogType": "website"
+  },
+  "tag/css": {
+    "title": "CSS",
+    "description": "Articles tagged with CSS and styling topics.",
+    "canonical": "/tag/css/",
+    "ogType": "website"
+  },
+  "search/index": {
+    "title": "Search",
+    "description": "Search articles by title, tag, and summary.",
+    "canonical": "/search/",
+    "ogType": "website"
+  },
+  "about/index": {
+    "title": "About",
+    "description": "About the author, editorial focus, and publishing principles.",
+    "canonical": "/about/",
+    "ogType": "website"
+  }
+}
