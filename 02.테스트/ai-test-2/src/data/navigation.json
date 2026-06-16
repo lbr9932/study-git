@@ -1,0 +1,7 @@
+{
+  "header": [
+    { "label": "Home", "href": "/" },
+    { "label": "Blog", "href": "/blog/" }
+  ],
+  "footer": []
+}

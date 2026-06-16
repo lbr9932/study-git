@@ -1,22 +1,42 @@
+{{#*inline "script"}}
+  <script src="/assets/js/home.js"></script>
+{{/inline}}
+
 {{#> layouts/base
-  title="Dev Notes"
-  description="Choose your reading language."
-  canonical="/"
-  ogType="website"
-  landing=true
-  bodyClass="landing"
+  title=title
+  description=description
+  canonical=canonical
+  ogType=ogType
+  bodyClass="home"
 }}
-  <section class="hero landing-hero">
-    <div class="hero__content landing-hero__content">
-      <p class="eyebrow">Dev Notes</p>
-      <h1>Choose your reading language</h1>
-      <p class="lead">
-        This entry page routes you into the Korean or English version of the blog.
-      </p>
-      <div class="hero__actions landing-hero__actions">
-        <a class="button button--primary" href="{{siteHref currentPath '/ko/'}}">한국어로 시작</a>
-        <a class="button button--secondary" href="{{siteHref currentPath '/en/'}}">Start in English</a>
-      </div>
-    </div>
-  </section>
+  {{#jsonBlock "hero"}}
+  {
+    "eyebrow": "Developer Blog",
+    "title": "Readable content with strong search visibility",
+    "lead": "A static blog foundation optimized for readability, SEO, and maintainability.",
+    "actions": [
+      { "label": "Browse posts", "href": "/blog/", "variant": "primary" },
+      { "label": "About this site", "href": "/about/", "variant": "secondary" }
+    ]
+  }
+  {{/jsonBlock}}
+
+  {{> page/home/hero ../hero}}
+
+  {{#jsonBlock "featured"}}
+  {
+    "title": "Featured posts",
+    "moreLabel": "View all",
+    "moreHref": "/blog/",
+    "post": {
+      "category": "Design",
+      "title": "Designing a blog for search and readability",
+      "excerpt": "A practical article structure that balances semantics, metadata, and reading flow.",
+      "tags": ["SEO", "UX", "HTML"],
+      "href": "/blog/sample-post/"
+    }
+  }
+  {{/jsonBlock}}
+
+  {{> page/home/featured ../featured}}
 {{/layouts/base}}

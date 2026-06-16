@@ -1,7 +1,14 @@
-import { initThemeToggle } from "./theme.js";
-import { initSearch } from "./search.js";
-import { initShareButtons } from "./share.js";
+import ThemeToggle from "./modules/theme.js";
+import SearchForm from "./modules/search.js";
+import ShareButtons from "./modules/share.js";
 
-initThemeToggle();
-initSearch();
-initShareButtons();
+
+document.addEventListener("DOMContentLoaded", () => {
+	const themeToggle = new ThemeToggle();
+	const searchForm = new SearchForm();
+	const shareButtons = new ShareButtons();
+	
+	themeToggle.init();
+	searchForm.init();
+	shareButtons.init();
+});

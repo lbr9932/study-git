@@ -1,7 +1,3 @@
-{{#*inline "style"}}
-  <link rel="stylesheet" href="{{resolve-from-root '../scss/en/home.scss'}}" />
-{{/inline}}
-
 {{#*inline "script"}}
   <script src="/assets/js/home.js"></script>
 {{/inline}}
@@ -19,8 +15,8 @@
     "title": "Readable content with strong search visibility",
     "lead": "A static blog foundation optimized for readability, SEO, and maintainability.",
     "actions": [
-      { "label": "Browse posts", "href": "/en/blog/", "variant": "primary" },
-      { "label": "About this site", "href": "/en/about/", "variant": "secondary" }
+      { "label": "Browse posts", "href": "/blog/", "variant": "primary" },
+      { "label": "About this site", "href": "/about/", "variant": "secondary" }
     ]
   }
   {{/jsonBlock}}
@@ -31,13 +27,13 @@
   {
     "title": "Featured posts",
     "moreLabel": "View all",
-    "moreHref": "/en/blog/",
+    "moreHref": "/blog/",
     "post": {
       "category": "Design",
       "title": "Designing a blog for search and readability",
       "excerpt": "A practical article structure that balances semantics, metadata, and reading flow.",
       "tags": ["SEO", "UX", "HTML"],
-      "href": "/en/blog/sample-post/"
+      "href": "/blog/sample-post/"
     }
   }
   {{/jsonBlock}}

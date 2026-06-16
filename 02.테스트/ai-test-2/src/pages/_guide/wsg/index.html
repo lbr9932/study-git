@@ -1,0 +1,183 @@
+{{#> layouts/base
+  title="WSG"
+  description="프로젝트 공통 스타일과 UI 모듈을 확인하는 웹 스타일 가이드입니다."
+  canonical="/_guide/wsg/"
+  ogType="website"
+  bodyClass="wsg-page"
+}}
+  <header class="wsg-hero">
+    <p class="eyebrow">Web Style Guide</p>
+    <h1>WSG</h1>
+    <p class="lead">공통 토큰, 타이포그래피, 버튼, 테이블, 탭, 폼 요소를 한 페이지에서 점검합니다.</p>
+    <nav class="wsg-anchor" aria-label="WSG 목차">
+      <a href="#typography">Typography</a>
+      <a href="#color">Color</a>
+      <a href="#button">Button</a>
+      <a href="#table">Table</a>
+      <a href="#tab">Tab</a>
+      <a href="#form">Form</a>
+    </nav>
+  </header>
+
+  <section class="wsg-section" id="typography">
+    <div class="wsg-section__head">
+      <p class="eyebrow">01</p>
+      <h2>Typography</h2>
+    </div>
+    <div class="wsg-panel">
+      <div class="wsg-type">
+        <p class="wsg-type__label">Heading 1</p>
+        <h3 class="wsg-type__h1">Readable content with strong search visibility</h3>
+      </div>
+      <div class="wsg-type">
+        <p class="wsg-type__label">Heading 2</p>
+        <h3 class="wsg-type__h2">Latest posts</h3>
+      </div>
+      <div class="wsg-type">
+        <p class="wsg-type__label">Body</p>
+        <p>가독성, SEO, 유지보수성을 우선하는 정적 블로그 기본 구조입니다. 문단은 넓은 줄 간격과 제한된 본문 폭을 기준으로 합니다.</p>
+      </div>
+      <div class="wsg-type">
+        <p class="wsg-type__label">Muted</p>
+        <p class="lead">보조 설명은 낮은 대비의 색상으로 정보 위계를 분리합니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wsg-section" id="color">
+    <div class="wsg-section__head">
+      <p class="eyebrow">02</p>
+      <h2>Color</h2>
+    </div>
+    <div class="wsg-swatch-grid">
+      <div class="wsg-swatch" style="--swatch: var(--color-bg);">
+        <span></span>
+        <strong>Background</strong>
+        <code>--color-bg</code>
+      </div>
+      <div class="wsg-swatch" style="--swatch: var(--color-surface);">
+        <span></span>
+        <strong>Surface</strong>
+        <code>--color-surface</code>
+      </div>
+      <div class="wsg-swatch" style="--swatch: var(--color-text);">
+        <span></span>
+        <strong>Text</strong>
+        <code>--color-text</code>
+      </div>
+      <div class="wsg-swatch" style="--swatch: var(--color-text-muted);">
+        <span></span>
+        <strong>Muted</strong>
+        <code>--color-text-muted</code>
+      </div>
+      <div class="wsg-swatch" style="--swatch: var(--color-border);">
+        <span></span>
+        <strong>Border</strong>
+        <code>--color-border</code>
+      </div>
+      <div class="wsg-swatch" style="--swatch: var(--color-accent);">
+        <span></span>
+        <strong>Accent</strong>
+        <code>--color-accent</code>
+      </div>
+    </div>
+  </section>
+
+  <section class="wsg-section" id="button">
+    <div class="wsg-section__head">
+      <p class="eyebrow">03</p>
+      <h2>Button</h2>
+    </div>
+    <div class="wsg-panel">
+      <div class="wsg-row">
+        <a class="button button--primary" href="#_">Primary</a>
+        <a class="button button--secondary" href="#_">Secondary</a>
+        <button class="theme-toggle" type="button">Theme Toggle</button>
+      </div>
+      <div class="wsg-row">
+        <button class="button button--primary" type="button" disabled>Disabled</button>
+        <a class="button button--secondary" href="#form">Go to form</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="wsg-section" id="table">
+    <div class="wsg-section__head">
+      <p class="eyebrow">04</p>
+      <h2>Table</h2>
+    </div>
+    <div class="wsg-table-wrap">
+      <table class="wsg-table">
+        <caption>게시글 목록 테이블 예시</caption>
+        <thead>
+          <tr>
+            <th scope="col">구분</th>
+            <th scope="col">제목</th>
+            <th scope="col">상태</th>
+            <th scope="col">작성일</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>공지</td>
+            <td>검색과 가독성을 함께 고려한 블로그 설계</td>
+            <td><span class="wsg-badge">진행</span></td>
+            <td>2026.06.16</td>
+          </tr>
+          <tr>
+            <td>글</td>
+            <td>정적 페이지 구조와 메타데이터 점검</td>
+            <td><span class="wsg-badge wsg-badge--muted">완료</span></td>
+            <td>2026.06.15</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="wsg-section" id="tab">
+    <div class="wsg-section__head">
+      <p class="eyebrow">05</p>
+      <h2>Tab</h2>
+    </div>
+    <div class="wsg-panel">
+      <ul class="wsg-tab-list" aria-label="탭 예시">
+        <li><a class="is-current" href="#_">전체</a></li>
+        <li><a href="#_">공지</a></li>
+        <li><a href="#_">블로그</a></li>
+        <li><a href="#_">가이드</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="wsg-section" id="form">
+    <div class="wsg-section__head">
+      <p class="eyebrow">06</p>
+      <h2>Form</h2>
+    </div>
+    <div class="wsg-form-grid">
+      <label class="wsg-field">
+        <span>Text field</span>
+        <input type="text" placeholder="내용을 입력하세요">
+      </label>
+      <label class="wsg-field">
+        <span>Select</span>
+        <select>
+          <option>선택항목 1</option>
+          <option>선택항목 2</option>
+          <option>선택항목 3</option>
+        </select>
+      </label>
+      <label class="wsg-field wsg-field--wide">
+        <span>Textarea</span>
+        <textarea rows="4" placeholder="메모를 입력하세요"></textarea>
+      </label>
+      <fieldset class="wsg-checks">
+        <legend>Choice</legend>
+        <label><input type="checkbox" checked> Checkbox</label>
+        <label><input type="radio" name="wsg-radio" checked> Radio 1</label>
+        <label><input type="radio" name="wsg-radio"> Radio 2</label>
+      </fieldset>
+    </div>
+  </section>
+{{/layouts/base}}

@@ -10,7 +10,7 @@
           <a
             class="site-nav__link"
             href="{{siteHref ../currentPath href}}"
-            {{#if (eq ../currentPath href)}}aria-current="page"{{/if}}
+            {{#if (eq ../currentPath (localizedPath ../currentPath href))}}aria-current="page"{{/if}}
           >{{label}}</a>
         {{/each}}
       </nav>

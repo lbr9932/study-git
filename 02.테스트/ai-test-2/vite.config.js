@@ -1,6 +1,6 @@
 import { defineConfig } from "vite";
 import handlebars from "vite-plugin-handlebars";
-import { existsSync, readdirSync } from "node:fs";
+import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, renameSync, rmSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, extname, relative, resolve, sep } from "node:path";
 import * as task from "./task/handlebars-helpers.js";
@@ -8,6 +8,31 @@ import * as task from "./task/handlebars-helpers.js";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const srcDir = resolve(__dirname, "src");
 const pagesDir = resolve(srcDir, "pages");
+const distDir = resolve(__dirname, "dist");
+const cssLinkPattern = /href="\/assets\/css\/([^"]+\.css)"/g;
+
+function isEnglishRoute(pathname) {
+  return pathname === "/en" || pathname.startsWith("/en/");
+}
+
+function isDefaultLocaleRoute(pathname) {
+  return pathname !== "/"
+    && !pathname.startsWith("/ko/")
+    && !pathname.startsWith("/assets/")
+    && !pathname.startsWith("/@")
+    && !extname(pathname);
+}
+
+function resolveDefaultLocaleSource(pathname) {
+  const pagePath = pathname.endsWith("/") ? `${pathname}index.html` : `${pathname}/index.html`;
+  const localPath = pagePath.replace(/^\//, "");
+  if (existsSync(resolve(pagesDir, localPath))) {
+    return pagePath;
+  }
+
+  const sourcePath = `/en${pagePath}`;
+  return existsSync(resolve(pagesDir, sourcePath.replace(/^\//, ""))) ? sourcePath : "";
+}
 
 function collectHtmlEntries(dir, rootDir = dir, entries = {}) {
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
@@ -23,10 +48,107 @@ function collectHtmlEntries(dir, rootDir = dir, entries = {}) {
     }
 
     const entryName = relative(rootDir, fullPath).split(sep).join("/").replace(/\.html$/, "");
-    entries[entryName] = fullPath;
+
+    if (entryName === "en/index") {
+      continue;
+    }
+
+    const outputName = entryName.startsWith("en/") ? entryName.slice(3) : entryName;
+    entries[outputName] = fullPath;
   }
 
   return entries;
+}
+
+function collectHtmlOutputs(dir, files = []) {
+  if (!existsSync(dir)) {
+    return files;
+  }
+
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    const fullPath = resolve(dir, entry.name);
+
+    if (entry.isDirectory()) {
+      collectHtmlOutputs(fullPath, files);
+      continue;
+    }
+
+    if (entry.isFile() && entry.name.endsWith(".html")) {
+      files.push(fullPath);
+    }
+  }
+
+  return files;
+}
+
+function getStyleNameFromOutput(htmlPath) {
+  const outputPath = relative(distDir, htmlPath).split(sep).join("/");
+  const segments = outputPath.split("/");
+  const localeOffset = segments[0] === "ko" ? 1 : 0;
+  const section = segments[localeOffset];
+  const nextSegment = segments[localeOffset + 1];
+
+  if (outputPath === "index.html" || outputPath === "ko/index.html") {
+    return "home";
+  }
+
+  if (section === "_guide") {
+    return "guide";
+  }
+
+  if (section === "blog" && nextSegment && nextSegment !== "index.html") {
+    return "post";
+  }
+
+  return section || "home";
+}
+
+function normalizeCssOutputs() {
+  const cssDir = resolve(distDir, "assets", "css");
+
+  if (!existsSync(cssDir)) {
+    return;
+  }
+
+  mkdirSync(cssDir, { recursive: true });
+
+  const generatedCssNames = new Set();
+  const targetCssNames = new Set();
+
+  for (const htmlPath of collectHtmlOutputs(distDir)) {
+    const html = readFileSync(htmlPath, "utf8");
+    const cssLinks = [...html.matchAll(cssLinkPattern)];
+
+    if (!cssLinks.length) {
+      continue;
+    }
+
+    const targetCssName = `${getStyleNameFromOutput(htmlPath)}.css`;
+    const targetCssPath = resolve(cssDir, targetCssName);
+    targetCssNames.add(targetCssName);
+
+    for (const [, generatedCssName] of cssLinks) {
+      generatedCssNames.add(generatedCssName);
+
+      const generatedCssPath = resolve(cssDir, generatedCssName);
+      if (existsSync(generatedCssPath) && !existsSync(targetCssPath)) {
+        copyFileSync(generatedCssPath, targetCssPath);
+      }
+    }
+
+    const updatedHtml = html.replace(cssLinkPattern, `href="/assets/css/${targetCssName}"`);
+    if (updatedHtml !== html) {
+      writeFileSync(htmlPath, updatedHtml);
+    }
+  }
+
+  for (const generatedCssName of generatedCssNames) {
+    if (targetCssNames.has(generatedCssName)) {
+      continue;
+    }
+
+    rmSync(resolve(cssDir, generatedCssName), { force: true });
+  }
 }
 
 export default defineConfig({
@@ -52,6 +174,34 @@ export default defineConfig({
     {
       name: "watch-handlebars-data",
       configureServer(server) {
+        server.middlewares.use((req, res, next) => {
+          if (!req.url) {
+            next();
+            return;
+          }
+
+          const url = new URL(req.url, "http://localhost");
+          const pathname = url.pathname;
+          if (isEnglishRoute(pathname)) {
+            res.statusCode = 404;
+            res.end("Not Found");
+            return;
+          }
+
+          if (isDefaultLocaleRoute(pathname)) {
+            const sourcePath = resolveDefaultLocaleSource(pathname);
+            if (sourcePath) {
+              req.url = `${sourcePath}${url.search}`;
+            } else {
+              res.statusCode = 404;
+              res.end("Not Found");
+              return;
+            }
+          }
+
+          next();
+        });
+
         const i18nDir = resolve(srcDir, "i18n");
         const dataDir = resolve(srcDir, "data");
         server.watcher.add([i18nDir, dataDir]);
@@ -60,6 +210,26 @@ export default defineConfig({
             server.ws.send({ type: "full-reload" });
           }
         });
+      },
+    },
+    {
+      name: "flatten-english-output",
+      closeBundle() {
+        const englishDir = resolve(distDir, "en");
+
+        if (!existsSync(englishDir)) {
+          normalizeCssOutputs();
+          return;
+        }
+
+        for (const entry of readdirSync(englishDir, { withFileTypes: true })) {
+          const sourcePath = resolve(englishDir, entry.name);
+          const targetPath = resolve(distDir, entry.name);
+          renameSync(sourcePath, targetPath);
+        }
+
+        rmSync(englishDir, { recursive: true, force: true });
+        normalizeCssOutputs();
       },
     },
     handlebars({
@@ -83,6 +253,7 @@ export default defineConfig({
   build: {
     outDir: resolve(__dirname, "dist"),
     emptyOutDir: true,
+    cssCodeSplit: true,
     rollupOptions: {
       input: collectHtmlEntries(pagesDir),
       output: {
