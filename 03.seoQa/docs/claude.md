@@ -30,9 +30,9 @@ Claude는 구현자가 아니라 제품 요구사항과 위험 요소를 검토�
 너는 보안과 제품 요구사항 정리에 강한 시니어 풀스택 리뷰어다.
 
 [Context]
-- 구현된 앱: Shopify SEO QA 내부용 웹앱
+- 구현된 앱: SEO QA 내부용 웹앱
 - 기술: Next.js App Router + PostgreSQL + Docker Compose
-- 현재 화면: 신규 점검/히스토리, 점검 상세, 페이지 상세
+- 현재 화면: 신규 점검, 그룹 목록, 그룹 상세, 점검 상세, 페이지 상세
 - 현재 DB: audits, page_results, check_results, audit_events
 - 현재 정책: 같은 도메인, 제품 상세 제외, query 제거, robots 옵션, SSRF 방어, 인증 정보 미저장
 
@@ -59,4 +59,3 @@ Markdown bullet list로만 답변해줘.
 - DB 스키마 변경이 기존 결과 조회를 깨지 않는가?
 - 페이지 수가 늘어날 때 요청 간격과 타임아웃 정책이 충분한가?
 - 결과 테이블과 페이지 상세에서 사용자가 원인을 바로 찾을 수 있는가?
-

@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
-import { getRecommendation } from "@/lib/recommendations";
+import { getRecommendation, getSchemaJsonExamples } from "@/lib/recommendations";
+import { auditStatusClass, auditStatusLabel, checkStateClass, checkStateLabel } from "@/lib/status-labels";
 import type { AuditDetail, PageResult } from "@/lib/types";
 
 type LoadState = "idle" | "loading" | "error";
@@ -47,7 +48,7 @@ export default function AuditPageDetail() {
         </div>
         <div className="topbar-actions">
           <Link className="ghost-button link-button" href={`/audits/${params.id}`}>점검 결과</Link>
-          <Link className="ghost-button link-button" href="/">목록</Link>
+          <Link className="ghost-button link-button" href="/groups">목록</Link>
         </div>
       </header>
 
@@ -62,15 +63,16 @@ export default function AuditPageDetail() {
 
 function PageDetailCard({ auditId, page }: { auditId: string; page: PageResult }) {
   const failedChecks = page.checks.filter((check) => !check.passed);
+  const orderedChecks = [...page.checks].sort((left, right) => compareCheckOrder(left.check_key, right.check_key));
 
   return (
-    <section className="results">
-      <div className="summary-grid">
+      <section className="results">
+        <div className="summary-grid">
         <Metric label="페이지 점수" value={`${Number(page.score).toFixed(2)}%`} />
         <Metric label="통과" value={page.passed_count} />
-        <Metric label="미통과" value={page.failed_count} />
+        <Metric label="미통과" value={page.failed_count} tone="danger" />
         <Metric label="HTTP" value={page.status_code ?? "-"} />
-      </div>
+        </div>
 
       <section className="panel">
         <div className="panel-heading">
@@ -78,12 +80,12 @@ function PageDetailCard({ auditId, page }: { auditId: string; page: PageResult }
             <p className="overline">URL</p>
             <h2>{page.url}</h2>
           </div>
-          <span className={statusClass(page.status)}>{page.status}</span>
+          <span className={auditStatusClass(page.status)}>{auditStatusLabel(page.status)}</span>
         </div>
         <div className="meta-strip">
           <span>audit {auditId.slice(0, 8)}</span>
           <span>{page.status_code ?? "no status"}</span>
-          <span>{failedChecks.length} failed</span>
+          <span>미통과 {failedChecks.length}개</span>
         </div>
         {page.error_message ? <div className="alert error">{page.error_message}</div> : null}
       </section>
@@ -115,36 +117,123 @@ function PageDetailCard({ auditId, page }: { auditId: string; page: PageResult }
           </div>
           <span className="chip">{page.checks.length} checks</span>
         </div>
-        <div className="check-list">
-          {page.checks.map((check) => (
-            <article className="check-row" key={check.id}>
-              <div>
-                <strong>{check.label}</strong>
-                <span>{check.details}</span>
-                {!check.passed ? <em>개선 방향: {getRecommendation(check.check_key)}</em> : null}
-              </div>
-              <span className={check.passed ? "status success" : "status error"}>{check.passed ? "pass" : "fail"}</span>
-            </article>
-          ))}
+        <div className="check-item-list">
+          {orderedChecks.map((check) => {
+            const state = getCheckState(check, page);
+            const extractedValue = getExtractedValue(check, page);
+            const improvement = state === "improve" || state === "fail" ? getRecommendation(check.check_key) : "-";
+            const supportRecommendation = getRecommendation(check.check_key);
+
+            return (
+              <article className="check-item" key={check.id}>
+                <div className="check-item-head">
+                  <h3>{check.label}</h3>
+                  <span className={checkToneClass(check, page)}>{checkToneLabel(check, page)}</span>
+                </div>
+                <table className="check-item-table">
+                  <tbody>
+                    <tr>
+                      <th className="check-item-emphasis" scope="row">소스 기준 추출값</th>
+                      <td>
+                        {check.check_key === "social_tag" ? (
+                          <pre className="check-code"><code>{extractedValue}</code></pre>
+                        ) : (
+                          <span>{extractedValue}</span>
+                        )}
+                      </td>
+                    </tr>
+                    <tr>
+                      <th className="check-item-emphasis" scope="row">판정내용</th>
+                      <td>{check.details}</td>
+                    </tr>
+                    <tr>
+                      <th className="check-item-emphasis" scope="row">개선 방향</th>
+                      <td>
+                        <span>{improvement}</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th className="check-item-emphasis" scope="row">보조 권장내용</th>
+                      <td>{supportRecommendation}</td>
+                    </tr>
+                    {check.check_key === "schema" ? (
+                      getSchemaJsonExamples(page).map((sample) => (
+                        <tr key={sample.label}>
+                          <th className="check-item-emphasis" scope="row">{sample.label}</th>
+                          <td>
+                            <pre className="json-sample"><code>{sample.value}</code></pre>
+                          </td>
+                        </tr>
+                      ))
+                    ) : null}
+                  </tbody>
+                </table>
+              </article>
+            );
+          })}
         </div>
       </section>
     </section>
   );
 }
 
-function Metric({ label, value }: { label: string; value: string | number }) {
+function Metric({ label, value, tone }: { label: string; value: string | number; tone?: "danger" }) {
   return (
     <div className="metric-card">
       <span>{label}</span>
-      <strong>{value}</strong>
+      <strong className={tone === "danger" ? "metric-danger" : undefined}>{value}</strong>
     </div>
   );
 }
 
-function statusClass(status: string) {
-  if (status === "completed" || status === "passed") return "status success";
-  if (status === "running") return "status warning";
-  return "status error";
+function checkToneClass(check: PageResult["checks"][number], page: PageResult) {
+  return checkStateClass(getCheckState(check, page));
+}
+
+function checkToneLabel(check: PageResult["checks"][number], page: PageResult) {
+  return checkStateLabel(getCheckState(check, page));
+}
+
+function getCheckState(check: PageResult["checks"][number], page: PageResult | null) {
+  if (check.check_key === "meta_description") {
+    const value = page?.meta_description?.trim() || "";
+    if (!value) return "fail";
+    if (value.length >= 50 && value.length <= 170) return "pass";
+    return "improve";
+  }
+
+  return check.passed ? "pass" : "fail";
+}
+
+function getExtractedValue(check: PageResult["checks"][number], page: PageResult) {
+  switch (check.check_key) {
+    case "status":
+      return page.status_code ? `${page.status_code}` : "-";
+    case "title":
+      return page.title || "-";
+    case "meta_description":
+      return page.meta_description || "-";
+    case "h1":
+      return page.h1 || "-";
+    case "canonical":
+      return page.canonical || "-";
+    case "social_tag":
+      return [
+        `og:title: ${page.og_title || "-"}`,
+        `og:description: ${page.og_description || "-"}`,
+        `og:url: ${page.og_url || "-"}`,
+        `twitter:card: ${page.twitter_card || "-"}`
+      ].join("\n");
+    case "schema":
+      return check.details || "-";
+    default:
+      return "-";
+  }
+}
+
+function compareCheckOrder(left: string, right: string) {
+  const order = ["title", "status", "meta_description", "h1", "canonical", "social_tag", "schema"];
+  return order.indexOf(left) - order.indexOf(right);
 }
 
 function errorMessage(error: unknown) {

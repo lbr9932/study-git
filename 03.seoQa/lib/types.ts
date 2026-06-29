@@ -2,6 +2,9 @@ export type AuditSummary = {
   id: string;
   target_url: string;
   normalized_origin: string;
+  audit_group_key: string;
+  audit_group_url: string;
+  version_no: number;
   status: string;
   max_pages: number;
   respect_robots: boolean;
@@ -30,6 +33,10 @@ export type PageResult = {
   meta_description: string | null;
   h1: string | null;
   canonical: string | null;
+  og_title: string | null;
+  og_description: string | null;
+  og_url: string | null;
+  twitter_card: string | null;
   checks: CheckResult[];
 };
 
@@ -39,6 +46,7 @@ export type CheckResult = {
   audit_id: string;
   check_key: string;
   label: string;
+  state?: "pass" | "improve" | "fail";
   passed: boolean;
   score: number;
   details: string;
@@ -56,4 +64,21 @@ export type AuditEvent = {
 export type AuditDetail = AuditSummary & {
   pages: PageResult[];
   events: AuditEvent[];
+};
+
+export type AuditGroupSummary = {
+  audit_group_key: string;
+  audit_group_url: string;
+  latest_audit_id: string;
+  latest_version_no: number;
+  latest_status: string;
+  last_run_at: string;
+  version_count: number;
+};
+
+export type AuditGroupDetail = {
+  audit_group_key: string;
+  audit_group_url: string;
+  latest_audit_id: string;
+  versions: AuditSummary[];
 };

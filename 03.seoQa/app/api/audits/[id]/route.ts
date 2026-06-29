@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { ensureAuditGroupingData } from "@/lib/audit-groups";
 import { ensureSchema, pool } from "@/lib/db";
 import type { AuditDetail, AuditEvent, AuditSummary, CheckResult, PageResult } from "@/lib/types";
 
@@ -12,6 +13,7 @@ type Params = {
 export async function GET(_request: NextRequest, { params }: Params) {
   try {
     await ensureSchema();
+    await ensureAuditGroupingData();
     const { id } = await params;
     const auditResult = await pool.query<AuditSummary>("SELECT * FROM audits WHERE id = $1", [id]);
     const audit = auditResult.rows[0];
@@ -58,6 +60,7 @@ export async function GET(_request: NextRequest, { params }: Params) {
 export async function DELETE(_request: NextRequest, { params }: Params) {
   try {
     await ensureSchema();
+    await ensureAuditGroupingData();
     const { id } = await params;
     await pool.query("DELETE FROM audits WHERE id = $1", [id]);
     return NextResponse.json({ ok: true });
@@ -69,4 +72,3 @@ export async function DELETE(_request: NextRequest, { params }: Params) {
 function errorMessage(error: unknown) {
   return error instanceof Error ? error.message : "알 수 없는 오류가 발생했습니다.";
 }
-

@@ -1,5 +1,6 @@
 import { randomUUID } from "node:crypto";
 import { NextRequest, NextResponse } from "next/server";
+import { ensureAuditGroupingData, normalizeAuditGroup } from "@/lib/audit-groups";
 import { ensureSchema, pool } from "@/lib/db";
 import { crawlAndAudit, DEFAULT_MAX_PAGES } from "@/lib/seo";
 import type { AuditSummary } from "@/lib/types";
@@ -10,6 +11,7 @@ export const dynamic = "force-dynamic";
 export async function GET() {
   try {
     await ensureSchema();
+    await ensureAuditGroupingData();
     const result = await pool.query<AuditSummary>(`
       SELECT *
       FROM audits
@@ -25,6 +27,7 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     await ensureSchema();
+    await ensureAuditGroupingData();
     const body = await request.json();
     const targetUrl = String(body.targetUrl ?? "").trim();
     const maxPages = Number(body.maxPages ?? DEFAULT_MAX_PAGES);
@@ -37,13 +40,33 @@ export async function POST(request: NextRequest) {
 
     const auditId = randomUUID();
     const createdBy = "internal-user";
+    const { groupKey, groupUrl } = normalizeAuditGroup(targetUrl);
+    const versionResult = await pool.query<{ count: string }>(
+      "SELECT COUNT(*)::text AS count FROM audits WHERE audit_group_key = $1",
+      [groupKey]
+    );
+    const versionNo = Number(versionResult.rows[0]?.count ?? "0") + 1;
 
     await pool.query(
       `
-        INSERT INTO audits (id, target_url, normalized_origin, status, max_pages, respect_robots, auth_required, created_by)
-        VALUES ($1, $2, $3, 'running', $4, $5, $6, $7)
+        INSERT INTO audits (
+          id, target_url, normalized_origin, audit_group_key, audit_group_url, version_no,
+          status, max_pages, respect_robots, auth_required, created_by
+        )
+        VALUES ($1, $2, $3, $4, $5, $6, 'running', $7, $8, $9, $10)
       `,
-      [auditId, targetUrl, targetUrl, Math.max(1, Math.min(100, maxPages || DEFAULT_MAX_PAGES)), respectRobots, authRequired, createdBy]
+      [
+        auditId,
+        targetUrl,
+        targetUrl,
+        groupKey,
+        groupUrl,
+        versionNo,
+        Math.max(1, Math.min(100, maxPages || DEFAULT_MAX_PAGES)),
+        respectRobots,
+        authRequired,
+        createdBy
+      ]
     );
 
     try {
@@ -79,9 +102,9 @@ export async function POST(request: NextRequest) {
           `
             INSERT INTO page_results (
               id, audit_id, url, status, status_code, score, passed_count, failed_count,
-              error_message, title, meta_description, h1, canonical
+              error_message, title, meta_description, h1, canonical, og_title, og_description, og_url, twitter_card
             )
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
           `,
           [
             pageId,
@@ -96,7 +119,11 @@ export async function POST(request: NextRequest) {
             page.title,
             page.metaDescription,
             page.h1,
-            page.canonical
+            page.canonical,
+            page.ogTitle,
+            page.ogDescription,
+            page.ogUrl,
+            page.twitterCard
           ]
         );
 
@@ -146,7 +173,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    return NextResponse.json({ id: auditId });
+    return NextResponse.json({ id: auditId, groupKey });
   } catch (error) {
     return NextResponse.json({ error: errorMessage(error) }, { status: 500 });
   }
@@ -155,4 +182,3 @@ export async function POST(request: NextRequest) {
 function errorMessage(error: unknown) {
   return error instanceof Error ? error.message : "알 수 없는 오류가 발생했습니다.";
 }
-

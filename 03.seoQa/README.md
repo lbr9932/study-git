@@ -10,6 +10,8 @@ docker compose up --build
 
 웹은 `http://localhost:3000`에서 열립니다.
 
+브라우저 기본 로그인 창으로 접근을 막으려면 `.env`에 `BASIC_AUTH_USER`와 `BASIC_AUTH_PASSWORD`를 넣으세요. 값이 있으면 앱과 API 전체가 401로 보호됩니다.
+
 로컬 개발로 실행하려면 Postgres를 먼저 띄운 뒤 의존성을 설치하고 실행합니다.
 
 ```bash
@@ -20,6 +22,7 @@ npm run dev
 ```
 
 `DATABASE_URL`을 따로 지정하지 않으면 개발 기본값으로 `postgres://seoqa:seoqa@localhost:5432/seoqa`를 사용합니다.
+`BASIC_AUTH_USER`, `BASIC_AUTH_PASSWORD`를 지정하면 브라우저 기본 아이디/비밀번호 입력창이 뜹니다.
 
 ## MVP 범위
 

@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "SEO QA",
-  description: "Internal Shopify SEO QA dashboard"
+  description: "Internal SEO QA dashboard"
 };
 
 export default function RootLayout({
@@ -17,4 +17,3 @@ export default function RootLayout({
     </html>
   );
 }
-

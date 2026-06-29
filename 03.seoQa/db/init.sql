@@ -2,6 +2,9 @@ CREATE TABLE IF NOT EXISTS audits (
   id UUID PRIMARY KEY,
   target_url TEXT NOT NULL,
   normalized_origin TEXT NOT NULL,
+  audit_group_key TEXT,
+  audit_group_url TEXT,
+  version_no INTEGER,
   status TEXT NOT NULL,
   max_pages INTEGER NOT NULL,
   respect_robots BOOLEAN NOT NULL DEFAULT TRUE,
@@ -30,6 +33,10 @@ CREATE TABLE IF NOT EXISTS page_results (
   meta_description TEXT,
   h1 TEXT,
   canonical TEXT,
+  og_title TEXT,
+  og_description TEXT,
+  og_url TEXT,
+  twitter_card TEXT,
   created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
@@ -53,6 +60,6 @@ CREATE TABLE IF NOT EXISTS audit_events (
 );
 
 CREATE INDEX IF NOT EXISTS idx_audits_created_at ON audits(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_audits_group_key ON audits(audit_group_key, version_no DESC);
 CREATE INDEX IF NOT EXISTS idx_page_results_audit_id ON page_results(audit_id);
 CREATE INDEX IF NOT EXISTS idx_check_results_audit_id ON check_results(audit_id);
-

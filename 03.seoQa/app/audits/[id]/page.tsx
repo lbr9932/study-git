@@ -3,7 +3,10 @@
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
+import { AuditCriteriaPanel } from "@/components/audit-criteria-panel";
+import { RetryAuditButton } from "@/components/retry-audit-button";
 import { getRecommendation } from "@/lib/recommendations";
+import { auditStatusClass, auditStatusLabel } from "@/lib/status-labels";
 import type { AuditDetail, PageResult } from "@/lib/types";
 
 type LoadState = "idle" | "loading" | "error";
@@ -22,6 +25,13 @@ export default function AuditDetailPage() {
   }, [params.id]);
 
   const failedPages = useMemo(() => audit?.pages.filter((page) => page.error_message || page.failed_count > 0) ?? [], [audit]);
+  const failedCheckLabels = useMemo(() => {
+    if (!audit) return [];
+    return audit.pages
+      .flatMap((page) => page.checks.filter((check) => !check.passed).map((check) => check.label))
+      .filter((label, index, source) => source.indexOf(label) === index)
+      .slice(0, 3);
+  }, [audit]);
   const filteredPages = useMemo(() => {
     const pages = audit?.pages ?? [];
     if (pageFilter === "passed") return pages.filter((page) => page.status === "passed" && page.failed_count === 0 && !page.error_message);
@@ -67,7 +77,8 @@ export default function AuditDetailPage() {
           <h1>점검 결과</h1>
         </div>
         <div className="topbar-actions">
-          <Link className="ghost-button link-button" href="/">목록</Link>
+          {audit ? <Link className="ghost-button link-button" href={`/groups/${encodeURIComponent(audit.audit_group_key)}`}>버전 목록</Link> : null}
+          <Link className="ghost-button link-button" href="/groups">목록</Link>
           <button className="ghost-button" onClick={() => void loadAudit(params.id)} type="button">새로고침</button>
         </div>
       </header>
@@ -90,18 +101,38 @@ export default function AuditDetailPage() {
                 <p className="overline">Dashboard</p>
                 <h2>{audit.target_url}</h2>
               </div>
-              <span className={statusClass(audit.status)}>{audit.status}</span>
+              <span className={auditStatusClass(audit.status)}>{auditStatusLabel(audit.status)}</span>
             </div>
             <div className="meta-strip">
+              <span>{`v${audit.version_no}`}</span>
               <span>실행자 {audit.created_by}</span>
               <span>최대 {audit.max_pages} pages</span>
               <span>robots {audit.respect_robots ? "on" : "off"}</span>
               <span>{formatDate(audit.created_at)}</span>
             </div>
             <div className="section-actions">
-              <Link className="text-button link-button" href={`/?reuse=${audit.id}`}>재검증 설정</Link>
+              <RetryAuditButton auditId={audit.id} className="text-button" />
               <button className="danger-button" onClick={() => void deleteAudit()} type="button">삭제</button>
             </div>
+          </section>
+
+          <section className="panel">
+            <div className="panel-heading">
+              <div>
+                <p className="overline">Priority</p>
+                <h2>먼저 볼 항목</h2>
+              </div>
+            </div>
+            <div className="meta-strip">
+              <span>{`미통과 ${audit.failed_count}개`}</span>
+              {failedCheckLabels.map((label) => (
+                <span key={label}>{label}</span>
+              ))}
+            </div>
+          </section>
+
+          <section className="panel">
+            <AuditCriteriaPanel />
           </section>
 
           <section className="panel table-panel">
@@ -130,10 +161,11 @@ export default function AuditDetailPage() {
                 <thead>
                   <tr>
                     <th>URL</th>
-                    <th>Status</th>
+                    <th>상태</th>
                     <th>Score</th>
                     <th>Pass</th>
                     <th>Fail</th>
+                    <th>주요 실패 항목</th>
                     <th>Title</th>
                   </tr>
                 </thead>
@@ -150,8 +182,8 @@ export default function AuditDetailPage() {
           <section className="panel">
             <div className="panel-heading">
               <div>
-                <p className="overline">Errors</p>
-                <h2>에러 상태</h2>
+                <p className="overline">Needs Attention</p>
+                <h2>개선 필요 페이지</h2>
               </div>
               <span className="chip">{failedPages.length} items</span>
             </div>
@@ -163,7 +195,7 @@ export default function AuditDetailPage() {
                   <details key={page.id} className="detail-card">
                     <summary>
                       <span>{page.url}</span>
-                      <strong>{page.error_message ? "error" : `${page.failed_count} failed`}</strong>
+                      <strong>{page.error_message ? "오류" : `${page.failed_count}개 미통과`}</strong>
                     </summary>
                     {page.error_message ? <p className="error-text">{page.error_message}</p> : null}
                     <ul>
@@ -243,19 +275,14 @@ function PageRow({ auditId, page }: { auditId: string; page: PageResult }) {
           </dl>
         </details>
       </td>
-      <td><span className={statusClass(page.status)}>{page.status}</span></td>
+      <td><span className={auditStatusClass(page.status)}>{auditStatusLabel(page.status)}</span></td>
       <td>{Number(page.score).toFixed(2)}%</td>
       <td>{page.passed_count}</td>
       <td>{page.failed_count}</td>
+      <td>{page.checks.filter((check) => !check.passed).slice(0, 2).map((check) => check.label).join(", ") || "-"}</td>
       <td>{page.title || "-"}</td>
     </tr>
   );
-}
-
-function statusClass(status: string) {
-  if (status === "completed" || status === "passed") return "status success";
-  if (status === "running") return "status warning";
-  return "status error";
 }
 
 function formatDate(value: string) {
